@@ -39,6 +39,9 @@ if __name__ == '__main__':
         if ksdb.is_cold_start():
             populate_database(ksdb)
             ksdb.set_cold_start(False)
+
+        probes = ksdb.update_probe_rate(1, 'FA')
+        print(probes)
     finally:
         ksdb.close()
 
