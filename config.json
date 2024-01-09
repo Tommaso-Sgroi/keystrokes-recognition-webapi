@@ -3,5 +3,5 @@
   "password": "root",
   "host": "127.0.0.1",
   "database": "keystrokes",
-  "raise_on_warnings": "True"
+  "raise_on_warnings": true
 }
