@@ -1,0 +1,15 @@
+# This is a Docker-compose file used to add custom services to the main docker compose
+version: '3'
+services:
+  db:
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=keystrokes
+    image: mysql:latest
+    ports:
+      - "3306:3306"
+
+    volumes:
+      - ./db-fixtures/:/docker-entrypoint-initdb.d/
+      - ../db/:/db/
+
