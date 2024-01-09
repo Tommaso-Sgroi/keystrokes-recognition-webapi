@@ -17,3 +17,6 @@ create table probe
         foreign key (userid) references user (ID)
             on update cascade on delete cascade
 ) comment 'users probes of the keystrokes'
+
+
+
