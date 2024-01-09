@@ -1,0 +1,268 @@
+openapi: 3.0.0
+servers:
+  - url: 'http://localhost:3000'
+info:
+  title: Keystrokes recognition 
+  description: Keystrokes recognition backend REST APIs
+  version: 1.0.0
+paths:
+  /user/:
+    post:
+
+      tags: [ "User"]
+      operationId: createMe
+      summary: Create a new user
+      description: "The user sends a Nickname. System will generate a unique Id for the user, which is created in the DB. The new Id is returned to the user."
+
+      requestBody:
+        required: true
+        content:
+          application/plain:
+            schema:
+              type: string
+              example: my username
+              description: User nickname
+              pattern: '^.*?$'
+              minLength: 3
+              maxLength: 255
+      responses:
+        '201':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: integer
+                example: 1
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/UserNotAuthorized' }
+        '500': { $ref: '#/components/responses/InternalServerError' }
+
+  
+  /user/phrases/:
+    get:
+      tags: [ "User"]
+      operationId: getPhrases
+      summary: get user's phrases
+      description: "probes of the users that have deposit"
+      parameters:
+          - $ref: "#/components/parameters/XId"
+      responses:
+          '200':
+            description: Success
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: "#/components/schemas/KeystrokeProbe"
+                  example:
+                    - keystrokeID: 1
+                      FA: 2
+                      FR: 1
+                      GA: 10
+                      GR: 5
+                      phrase: "the lazy brown fox"
+                    - keystrokeID: 2
+                      FA: 0
+                      FR: 0
+                      GA: 15
+                      GR: 3
+                      phrase: "do something"
+
+  
+          '400': { $ref: "#/components/responses/BadRequest" }
+          '401': { $ref: '#/components/responses/UserNotAuthorized' }
+          '500': { $ref: '#/components/responses/InternalServerError' }
+  
+  /phrases/:
+    get:
+      tags: [ "Phrase"]
+      operationId: getAllPhrases
+      summary: get all phrases
+      description: "all phrases deposited"
+
+      responses:
+          '200':
+            description: Success
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: "#/components/schemas/KeystrokeProbe"
+                  example:
+                    - keystrokeID: 1
+                      FA: 2
+                      FR: 1
+                      GA: 10
+                      GR: 5
+                      phrase: "the lazy brown fox"
+                    - keystrokeID: 2
+                      FA: 0
+                      FR: 0
+                      GA: 15
+                      GR: 3
+                      phrase: "do something"
+                    - keystrokeID: 3
+                      FA: 1
+                      FR: 5
+                      GA: 8
+                      GR: 2
+                      phrase: "not my phrase"
+          '400': { $ref: "#/components/responses/BadRequest" }
+          '401': { $ref: '#/components/responses/UserNotAuthorized' }
+          '500': { $ref: '#/components/responses/InternalServerError' }
+  
+  /phrases/claim/{keystrokeid}:
+    put:
+      tags: [ "Phrase"]
+      operationId: claimPhrase
+      summary: claim the identity of a phrase
+      description: "claim the identity of a phrase"
+      parameters:
+        - $ref: "#/components/parameters/XId"
+        - name: keystrokeid
+          schema:
+            type: integer
+          in: path
+          description: keystroke ID
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Keystrokes'
+              
+            example: 
+            - 
+              - [16, 372, 0, 0]
+              - [72, 95, 293, 79]
+              - [69, 67, 120, 25]
+            -
+              - [16, 120, 0, 0]
+              - [68, 91, 69, 51]
+              - [73, 67, 110, 19]
+          
+      responses:
+          '200':
+            description: Success
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: "#/components/schemas/ClaimResult"
+                example:
+                  passed: true
+                  likelyhood: 0.95
+  
+          '400': { $ref: "#/components/responses/BadRequest" }
+          '404': { $ref: '#/components/responses/NotFound' }
+          '500': { $ref: '#/components/responses/InternalServerError' }
+
+components:
+  parameters:
+      XId:
+        schema:
+          type: integer
+        name: X-Id
+        in: header
+        required: true
+        description: App user id readable version ("semantic version" format)
+        allowEmptyValue: false
+        example: 1
+  
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        username:
+          type: string
+          example: theUser
+    
+    StringKeystrokeID:
+      type: object
+      properties:
+        id: 
+          type: integer
+        phrase:
+          type: string
+  
+    ClaimResult:
+      type: object
+      properties:
+        passed: 
+          type: boolean
+        likelyhood:
+          type: number
+    
+    Keystrokes:
+      type: array
+      items:
+        type: array
+        items:
+          type: array
+          items:
+            type: number
+            format: float
+      example: 1.0
+          
+    KeystrokeProbe:
+      type: object
+      properties:
+        keystrokeID:
+          type: integer
+          format: uint32
+          description: Keystrokes ID
+        FA:
+          type: integer
+          format: uint32
+          default: 0
+          description: False Acceptance
+        FR:
+          type: integer
+          format: uint32
+          default: 0
+          description: False Rejection
+        GA:
+          type: integer
+          format: uint32
+          default: 0
+          description: Genuine Acceptance
+        GR:
+          type: integer
+          format: uint32
+          default: 0
+          description: Genuine Rejection
+        phrase:
+          type: string
+          description: Keystrokes JSON (array with fixed size)
+      required:
+        - userid
+        - keystroke
+      additionalProperties: false
+  responses:
+    NotFound:
+      description: The requested resource can't be found
+    UserNotAuthorized:
+      description: The access token is missing or it's expired
+    Forbidden:
+      description: The user is not authorized to do this operation
+    BadRequest:
+      description: The request was not compliant with the documentation (eg. missing fields, etc)
+    InternalServerError:
+      description: The server encountered an internal error. Further info in server logs
+    Conflict:
+      description: The server encountered a conflict. Further info in server logs
+    PreconditionFailed:
+      description: The condition defined hasn't been fulfilled
+    PaymentRequired:
+      description: The request cannot be processed until the client makes a payment.
+      
+  
+  
