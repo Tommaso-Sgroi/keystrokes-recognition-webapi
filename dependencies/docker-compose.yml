@@ -9,5 +9,5 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - ../db/:/db/
+      - ../db/:/docker-entrypoint-initdb.d/
 
