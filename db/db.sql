@@ -16,7 +16,13 @@ create table probe
     constraint probe_user_ID_fk
         foreign key (userid) references user (ID)
             on update cascade on delete cascade
-) comment 'users probes of the keystrokes'
+) comment 'users probes of the keystrokes';
 
 
+create table cold_start
+(
+    has_cold_start bool default true not null
+);
+
+insert into cold_start value (1);
 
