@@ -1,9 +1,6 @@
-from typing import Union
-
-from fastapi import FastAPI, Header, HTTPException
+from fastapi import FastAPI, Header, HTTPException, Request
 from pydantic import BaseModel
 
-from ..database import KeystrokeDatabase
 from .utility import load_db
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -32,15 +29,13 @@ def create_user(nickname: Data):
 
 
 @app.get("/user/phrases/")
-def get_user_phrases(
-        XId: int = Header(..., description="App user id readable version ('semantic version' format)")):
+def get_user_phrases(request: Request):
     # Assume you retrieve phrases for the specified user from the database
-    user_phrases = [
-        {"keystrokeID": 1, "FA": 2, "FR": 1, "GA": 10, "GR": 5, "phrase": "the lazy brown fox"},
-        {"keystrokeID": 2, "FA": 0, "FR": 0, "GA": 15, "GR": 3, "phrase": "do something"},
-    ]
+    XId = request.headers.get('X-Id')
 
-    return user_phrases
+    user_phrases = keystroke_database.get_user_probes(int(XId))
+
+    return [v[:-1] for v in user_phrases]
 
 
 @app.get("/phrases/")
