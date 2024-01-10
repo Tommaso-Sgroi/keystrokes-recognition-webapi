@@ -6,9 +6,28 @@ info:
   description: Keystrokes recognition backend REST APIs
   version: 1.0.0
 paths:
+  /users/:
+    get:
+      tags: [ "User"]
+      operationId: getUsers
+      summary: Get all existing users
+      description: "get all existing users"
+
+      responses:
+        '201':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/UserNotAuthorized' }
+        '500': { $ref: '#/components/responses/InternalServerError' }
+
   /user/:
     post:
-
       tags: [ "User"]
       operationId: createMe
       summary: Create a new user
@@ -38,9 +57,10 @@ paths:
       tags: [ "User"]
       operationId: getPhrases
       summary: get user's phrases
-      description: "probes of the users that have deposit"
+      description: "probes of the authenticated users that have deposit, it correspond to the client"
       parameters:
           - $ref: "#/components/parameters/XId"
+
       responses:
           '200':
             description: Success
@@ -89,6 +109,8 @@ paths:
       operationId: getAllPhrases
       summary: get all phrases
       description: "all phrases deposited"
+      parameters:
+          - $ref: "#/components/parameters/XId"
 
       responses:
           '200':
@@ -98,23 +120,30 @@ paths:
                 schema:
                   type: array
                   items:
-                    $ref: "#/components/schemas/KeystrokeProbe"
+                    type: object
+                    properties:
+                      keystroke:
+                        $ref: "#/components/schemas/KeystrokeProbe"
+                      user:
+                        $ref: "#/components/schemas/User"
                   example:
-                    - keystrokeID: 1
-                      FA: 2
-                      FR: 1
-                      GA: 10
-                      GR: 5
-                      phrase: "the lazy brown fox"
+                    - probe:
+                        keystrokeID: 1
+                        FA: 2
+                        FR: 1
+                        GA: 10
+                        GR: 5
+                        phrase: "the lazy brown fox"
                       user:
                         id: 1
                         username: "theUser"
-                    - keystrokeID: 2
-                      FA: 0
-                      FR: 0
-                      GA: 15
-                      GR: 3
-                      phrase: "do something"
+                    - probe:
+                        keystrokeID: 2
+                        FA: 0
+                        FR: 0
+                        GA: 15
+                        GR: 3
+                        phrase: "do something"
                       user:
                         id: 2
                         username: "anotherUser"
@@ -127,7 +156,7 @@ paths:
       tags: [ "Phrase"]
       operationId: claimPhrase
       summary: claim the identity of a phrase
-      description: "claim the identity of a phrase"
+      description: "claim the identity of a phrase, if the phrase is not of the authenticated user the false acceptance is increased, else the genuine rejection. If the phrase is of the user and it isn't accepted then the false rejection is increased, otherwise the genuine acceptance is increased"
       parameters:
         - $ref: "#/components/parameters/XId"
         - name: keystrokeid
@@ -283,3 +312,6 @@ components:
       description: The condition defined hasn't been fulfilled
     PaymentRequired:
       description: The request cannot be processed until the client makes a payment.
+
+
+

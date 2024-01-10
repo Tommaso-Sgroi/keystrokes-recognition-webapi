@@ -1,6 +1,6 @@
 from fastapi import FastAPI, Header, HTTPException, Request
 from pydantic import BaseModel
-
+from .classes import *
 from .utility import load_db
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -40,14 +40,19 @@ def get_user_phrases(request: Request):
 
 @app.get("/phrases/")
 def get_all_phrases():
-    # Assume you retrieve all phrases from the database
-    all_phrases = [
-        {"keystrokeID": 1, "FA": 2, "FR": 1, "GA": 10, "GR": 5, "phrase": "the lazy brown fox"},
-        {"keystrokeID": 2, "FA": 0, "FR": 0, "GA": 15, "GR": 3, "phrase": "do something"},
-        {"keystrokeID": 3, "FA": 1, "FR": 5, "GA": 8, "GR": 2, "phrase": "not my phrase"},
-    ]
+    class Wrapper(object):
+        def __init__(self, user, probe):
+            self.user = user
+            self.probe = probe
 
-    return all_phrases
+    # Assume you retrieve all phrases from the database
+    probes_user = keystroke_database.get_probes_with_user()
+    values = []
+    for probe in probes_user:
+        values.append(Wrapper(User(probe[0], probe[1]), Probe(*probe[2:])))
+    pass
+
+    return values
 
 
 @app.put("/phrases/claim/{keystrokeid}")

@@ -61,7 +61,8 @@ class KeystrokeDatabase(object):
         keystrokes = json.dumps(keystrokes, indent=-1)
         cursor = self()
         try:
-            cursor.execute('INSERT INTO probe (userid, keystroke) VALUES (%s, %s)', (uid, keystrokes))
+            # change the value of the sentence in the future
+            cursor.execute('INSERT INTO probe (userid, keystroke, sentence) VALUES (%s, %s, %s)', (uid, keystrokes, 'totally not a sentence'))
             self.cnx.commit()
         finally:
             cursor.close()
@@ -87,7 +88,7 @@ class KeystrokeDatabase(object):
     def get_user_probes(self, userid):
         cursor = self()
         try:
-            cursor.execute('SELECT keystrokeid, FA, FR, keystroke FROM probe where userid=%s', (userid,))
+            cursor.execute('SELECT keystrokeid, FA, FR, keystroke, sentence FROM probe where userid=%s', (userid,))
             probes = cursor.fetchall()
             return probes
         finally:
@@ -96,7 +97,16 @@ class KeystrokeDatabase(object):
     def get_user_probe(self, userid, keystrokeId):
         cursor = self()
         try:
-            cursor.execute('SELECT FA, FR, keystroke FROM probe where userid=%s and keystrokeid=%s', (userid, keystrokeId))
+            cursor.execute('SELECT FA, FR, GA, GR, keystroke, sentence FROM probe where userid=%s and keystrokeid=%s', (userid, keystrokeId))
+            probes = cursor.fetchall()
+            return probes
+        finally:
+            cursor.close()
+
+    def get_probes_with_user(self):
+        cursor = self()
+        try:
+            cursor.execute('SELECT userid, name, keystrokeID, FA, FR, GA, GR, sentence FROM probe join user on userid=id')
             probes = cursor.fetchall()
             return probes
         finally:
