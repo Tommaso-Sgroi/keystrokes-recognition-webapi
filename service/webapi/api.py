@@ -27,10 +27,8 @@ class Data(BaseModel):
 @app.post("/user/")
 def create_user(nickname: Data):
     # Assume you generate a unique user ID and store it in the database
-    user_id = len(fake_db) + 1
-    fake_db[user_id] = {"id": user_id, "username": nickname}
-
-    return {"id": user_id}
+    id = keystroke_database.insert_new_user(nickname.username)
+    return {"id": id}
 
 
 @app.get("/user/phrases/")

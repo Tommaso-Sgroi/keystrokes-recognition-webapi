@@ -41,6 +41,15 @@ class KeystrokeDatabase(object):
         finally:
             cursor.close()
 
+    def insert_new_user(self, name):
+        cursor = self()
+        try:
+            cursor.execute('INSERT INTO user (name) VALUES (%s)', (name,))
+            self.cnx.commit()
+            return cursor.lastrowid
+        finally:
+            cursor.close()
+
     def delete_user(self, userid):
         cursor = self()
         try:
