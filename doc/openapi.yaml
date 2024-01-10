@@ -49,7 +49,13 @@ paths:
                 schema:
                   type: array
                   items:
-                    $ref: "#/components/schemas/KeystrokeProbe"
+                    type: object
+                    properties:
+                      keystroke:
+                        $ref: "#/components/schemas/KeystrokeProbe"
+                      user:
+                        $ref: "#/components/schemas/User"
+
                   example:
                     - keystrokeID: 1
                       FA: 2
@@ -63,6 +69,14 @@ paths:
                       GA: 15
                       GR: 3
                       phrase: "do something"
+                    - keystrokeID: 3
+                      FA: 1
+                      FR: 5
+                      GA: 8
+                      GR: 2
+                      phrase: "not my phrase"
+
+
 
 
           '400': { $ref: "#/components/responses/BadRequest" }
@@ -92,18 +106,18 @@ paths:
                       GA: 10
                       GR: 5
                       phrase: "the lazy brown fox"
+                      user:
+                        id: 1
+                        username: "theUser"
                     - keystrokeID: 2
                       FA: 0
                       FR: 0
                       GA: 15
                       GR: 3
                       phrase: "do something"
-                    - keystrokeID: 3
-                      FA: 1
-                      FR: 5
-                      GA: 8
-                      GR: 2
-                      phrase: "not my phrase"
+                      user:
+                        id: 2
+                        username: "anotherUser"
           '400': { $ref: "#/components/responses/BadRequest" }
           '401': { $ref: '#/components/responses/UserNotAuthorized' }
           '500': { $ref: '#/components/responses/InternalServerError' }
@@ -190,23 +204,23 @@ components:
         username:
           type: string
           example: theUser
-    
+
     StringKeystrokeID:
       type: object
       properties:
-        id: 
+        id:
           type: integer
         phrase:
           type: string
-  
+
     ClaimResult:
       type: object
       properties:
-        passed: 
+        passed:
           type: boolean
         likelyhood:
           type: number
-    
+
     Keystrokes:
       type: array
       items:
@@ -217,7 +231,7 @@ components:
             type: number
             format: float
       example: 1.0
-          
+
     KeystrokeProbe:
       type: object
       properties:
@@ -269,6 +283,3 @@ components:
       description: The condition defined hasn't been fulfilled
     PaymentRequired:
       description: The request cannot be processed until the client makes a payment.
-      
-  
-  
