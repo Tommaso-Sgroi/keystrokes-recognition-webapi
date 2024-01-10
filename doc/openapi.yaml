@@ -173,14 +173,10 @@ paths:
               $ref: '#/components/schemas/Keystrokes'
 
             example:
-            -
               - [16, 372, 0, 0]
               - [72, 95, 293, 79]
               - [69, 67, 120, 25]
-            -
-              - [16, 120, 0, 0]
-              - [68, 91, 69, 51]
-              - [73, 67, 110, 19]
+
 
       responses:
           '200':
@@ -255,10 +251,8 @@ components:
       items:
         type: array
         items:
-          type: array
-          items:
-            type: number
-            format: float
+          type: number
+          format: float
       example: 1.0
 
     KeystrokeProbe:
