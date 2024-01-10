@@ -17,3 +17,6 @@ down:
 	docker compose -p ${PROJECT_NAME} \
 		-f dependencies/docker-compose.yml \
 		down
+
+.PHONY: start-api
+	uvicorn main:app --reload

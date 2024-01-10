@@ -17,14 +17,9 @@ paths:
       requestBody:
         required: true
         content:
-          application/plain:
+          application/json:
             schema:
-              type: string
-              example: my username
-              description: User nickname
-              pattern: '^.*?$'
-              minLength: 3
-              maxLength: 255
+              $ref: '#/components/schemas/UserRequestBody'
       responses:
         '201':
           description: Success
@@ -37,7 +32,7 @@ paths:
         '401': { $ref: '#/components/responses/UserNotAuthorized' }
         '500': { $ref: '#/components/responses/InternalServerError' }
 
-  
+
   /user/phrases/:
     get:
       tags: [ "User"]
@@ -69,11 +64,11 @@ paths:
                       GR: 3
                       phrase: "do something"
 
-  
+
           '400': { $ref: "#/components/responses/BadRequest" }
           '401': { $ref: '#/components/responses/UserNotAuthorized' }
           '500': { $ref: '#/components/responses/InternalServerError' }
-  
+
   /phrases/:
     get:
       tags: [ "Phrase"]
@@ -112,7 +107,7 @@ paths:
           '400': { $ref: "#/components/responses/BadRequest" }
           '401': { $ref: '#/components/responses/UserNotAuthorized' }
           '500': { $ref: '#/components/responses/InternalServerError' }
-  
+
   /phrases/claim/{keystrokeid}:
     put:
       tags: [ "Phrase"]
@@ -133,9 +128,9 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Keystrokes'
-              
-            example: 
-            - 
+
+            example:
+            -
               - [16, 372, 0, 0]
               - [72, 95, 293, 79]
               - [69, 67, 120, 25]
@@ -143,7 +138,7 @@ paths:
               - [16, 120, 0, 0]
               - [68, 91, 69, 51]
               - [73, 67, 110, 19]
-          
+
       responses:
           '200':
             description: Success
@@ -156,7 +151,7 @@ paths:
                 example:
                   passed: true
                   likelyhood: 0.95
-  
+
           '400': { $ref: "#/components/responses/BadRequest" }
           '404': { $ref: '#/components/responses/NotFound' }
           '500': { $ref: '#/components/responses/InternalServerError' }
@@ -172,8 +167,19 @@ components:
         description: App user id readable version ("semantic version" format)
         allowEmptyValue: false
         example: 1
-  
+
   schemas:
+    UserRequestBody:
+      type: object
+      properties:
+        username:
+          type: string
+          example: 'my username'
+          description: User nickname
+          pattern: '^.*?$'
+          minLength: 3
+          maxLength: 255
+
     User:
       type: object
       properties:

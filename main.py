@@ -1,15 +1,14 @@
 from os import sep as separator
 
 from service.database.db import KeystrokeDatabase
+from service.webapi.api import app
+from service.webapi.utility import load_db
+import uvicorn
+
+app = app
 
 
-def load_db(path='./config.json'):
-    from service.database.db import connect_db, load_config
 
-    config = load_config(path)
-    connection = connect_db(config)
-
-    return KeystrokeDatabase(connection)
 
 
 def populate_database(ks: KeystrokeDatabase, file=f'data{separator}ks.zip'):
@@ -45,3 +44,4 @@ if __name__ == '__main__':
     finally:
         ksdb.close()
 
+    uvicorn.run("main:app", port=3000, log_level="debug", reload=True)
