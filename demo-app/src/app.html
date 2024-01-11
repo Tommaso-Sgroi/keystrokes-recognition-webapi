@@ -18,6 +18,17 @@
 	</body>
 </html>
 
+<script>
+
+	//get all users
+
+	//send phrases of the user
+
+	//subscribe with username
+	
+	
+</script>
+
 <style>
 	*{
 		box-sizing: border-box;
@@ -25,7 +36,7 @@
 		padding: 0;
 	}
 	body{
-		background-color: whitesmoke;
+		background-color: rgb(170, 227, 153);
 		width: 100%;
 		height: 100vh;
 	}
@@ -35,17 +46,64 @@
 		margin: 0 auto;
 		color:red;
 	}
-	.card{
-		margin-top : 10%;
-		margin-left: 40%;
-		padding:1em;
+	
+
+	.bigcard{
+		margin:70px;
 		background-color: antiquewhite;
-		box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-  		transition: 0.3s;
-		height: 20%;
-		width: 20%;
+		box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.787);
+		height:auto;
+		width:auto;
+		border-radius: 25px;
 	}
-	.card:hover {
-  		box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+
+	.container {
+  		transition: 0.3s;
+		text-align: center;
+		width:auto;
+		height:auto;
+		display:flex;
+		padding: 1%;
+		justify-content: center;
+  		align-items: center; 
+		flex-direction: column;
+	}
+	
+	.tab1cards {
+		display: flex;
+		flex-direction: row;
+		padding: 50px;
+		text-align: center;
+	}
+
+	.container.profile:hover{
+		box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+		border-radius: 5%;
+		transform: scale(1.05);
+	}
+	.container.profile{
+		position: relative;
+		margin:2%;
+	}
+
+	.avatar{
+		width: 70%;
+		height: 70%;
+	}
+
+	.button{
+		border-radius: 25px;
+		background-color: rgb(236, 149, 27);
+		color: rgb(0, 0, 0);
+		padding: 15px 32px;
+		text-align: center;
+		display: inline-block;
+		font-size: 16px;
+		border: none;
+	}
+
+	.button:hover{
+		box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+		transform: scale(1.01);
 	}
 </style>

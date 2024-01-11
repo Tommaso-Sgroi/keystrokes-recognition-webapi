@@ -1,32 +1,46 @@
-<h1>Hello World</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
-<div
-    class="card"
-    >
-    <h5 class="mt-5 text-4xl text-green-500 dark:text-purple-500">Accedi</h5>
-
-    <form
-      class="flex grow flex-col justify-evenly"
-    >
-      <label class="flex flex-col justify-around">
-        <div class="text-md dark:text-white">Email</div>
-        <input
-          required
-          class="w-4/6 self-center rounded border-[1px] border-graphite p-1 text-sm"
-          type="text"
-          placeholder="@"
-          v-model="email"
-        />
-      </label>
-      <label class="flex flex-col">
-        <div class="text-md dark:text-white">Password</div>
-        <input
-          required
-          class="w-4/6 self-center rounded border-[1px] border-graphite p-1 text-sm"
-          type="password"
-          placeholder="Password"
-          v-model="password"
-        />
-      </label>
-    </form>
+<div class="bigcard">
+  <div class=container>
+    <h2><b>Claim Id</b></h2>
   </div>
+  <div class="tab1cards">
+    <div class="container profile">
+      <img class="avatar" src="https://www.w3schools.com/howto/img_avatar.png" alt="users">
+      <div class=container>
+        <h4><b>Nunzia</b></h4>
+      </div>
+    </div>
+    <div class="container profile">
+      <img class="avatar" src="https://www.w3schools.com/howto/img_avatar.png" alt="users">
+      <div class=container>
+        <h4><b>Elena</b></h4>
+      </div>
+    </div>
+    <div class="container profile">
+      <img class="avatar" src="https://www.w3schools.com/howto/img_avatar.png" alt="users">
+      <div class=container>
+        <h4><b>Tommaso</b></h4>
+      </div>
+    </div>
+    <div class="container profile">
+      <img class="avatar" src="https://www.w3schools.com/howto/img_avatar.png" alt="users">
+      <div class=container>
+        <h4><b>Mary</b></h4>
+      </div>
+    </div>
+  </div>  
+  <form style="display:none">
+    <label>
+      <div>Username</div>
+      <input
+        required
+        type="text"
+        placeholder="user123"
+        v-model="username"
+      />
+    </label>
+  </form>
+  <div class="container">
+    <h3><button class="button" onclick="register()">Click to register</button></h3>
+  </div>
+</div>
+
