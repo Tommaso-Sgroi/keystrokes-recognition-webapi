@@ -8,9 +8,6 @@ import uvicorn
 app = app
 
 
-
-
-
 def populate_database(ks: KeystrokeDatabase, file=f'data{separator}ks.zip'):
     import zipfile, json
     from pathlib import Path
@@ -28,7 +25,8 @@ def populate_database(ks: KeystrokeDatabase, file=f'data{separator}ks.zip'):
     id_keystrokes = read_from_zip()
     for uid, keystrokes in id_keystrokes:
         ks.insert_user(uid, '')  # insert user in DB
-        ks.insert_keystroke(uid, keystrokes)  # insert keystroke in DB
+        for keystroke in keystrokes:
+            ks.insert_keystroke(uid, keystroke)  # insert keystroke in DB
         pass
 
 

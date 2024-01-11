@@ -67,6 +67,7 @@ paths:
       operationId: getPhrases
       summary: get user's phrases
       description: "probes of the authenticated users that have deposit, it correspond to the client"
+      deprecated: true
       parameters:
           - $ref: "#/components/parameters/XId"
 

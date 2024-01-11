@@ -106,7 +106,7 @@ class KeystrokeDatabase(object):
     def get_probes_with_user(self):
         cursor = self()
         try:
-            cursor.execute('SELECT userid, name, keystrokeID, FA, FR, GA, GR, sentence FROM probe join user on userid=id')
+            cursor.execute('SELECT userid, name, keystrokeID, FA, FR, GA, GR, sentence, keystroke FROM probe join user on userid=id')
             probes = cursor.fetchall()
             return probes
         finally:
