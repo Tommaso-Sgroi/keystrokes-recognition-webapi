@@ -121,10 +121,11 @@ paths:
       summary: claim the identity of a phrase
       description: "claim the identity of a phrase, if the phrase is not of the authenticated user the false acceptance is increased, else the genuine rejection. If the phrase is of the user and it isn't accepted then the false rejection is increased, otherwise the genuine acceptance is increased"
       parameters:
-        - $ref: "#/components/parameters/XId"
         - name: userid
           schema:
             type: integer
+            example:
+             102
           in: path
           description: keystroke ID
           required: true
@@ -147,7 +148,7 @@ paths:
                     $ref: "#/components/schemas/ClaimResult"
                 example:
                   passed: true
-                  likelyhood: 0.95
+                  likelihood: 0.95
 
           '400': { $ref: "#/components/responses/BadRequest" }
           '404': { $ref: '#/components/responses/NotFound' }
@@ -198,7 +199,7 @@ components:
       properties:
         passed:
           type: boolean
-        likelyhood:
+        likelihood:
           type: number
 
     Keystrokes:

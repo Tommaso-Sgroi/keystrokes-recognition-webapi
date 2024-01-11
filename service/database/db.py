@@ -57,6 +57,23 @@ class KeystrokeDatabase(object):
         finally:
             cursor.close()
 
+    def get_all_users(self):
+        cursor = self()
+        try:
+            cursor.execute('SELECT id, name FROM user')
+            return cursor.fetchall()
+        finally:
+            cursor.close()
+
+    def user_exists(self, uid):
+        cursor = self()
+        cursor = self()
+        try:
+            cursor.execute('SELECT COUNT(DISTINCT id) FROM user WHERE id=%s', (uid,))
+            return cursor.fetchone()[0] > 0
+        finally:
+            cursor.close()
+
     def insert_keystroke(self, uid, keystrokes):
         keystrokes = json.dumps(keystrokes, indent=-1)
         cursor = self()
@@ -64,6 +81,7 @@ class KeystrokeDatabase(object):
             # change the value of the sentence in the future
             cursor.execute('INSERT INTO probe (userid, keystroke, sentence) VALUES (%s, %s, %s)', (uid, keystrokes, 'totally not a sentence'))
             self.cnx.commit()
+            return cursor.lastrowid
         finally:
             cursor.close()
 
@@ -88,8 +106,9 @@ class KeystrokeDatabase(object):
     def get_user_probes(self, userid):
         cursor = self()
         try:
-            cursor.execute('SELECT keystrokeid, FA, FR, keystroke, sentence FROM probe where userid=%s', (userid,))
+            cursor.execute('SELECT keystroke FROM probe where userid=%s', (userid,))
             probes = cursor.fetchall()
+            probes = [probes[i][0] for i in range(len(probes))]
             return probes
         finally:
             cursor.close()
