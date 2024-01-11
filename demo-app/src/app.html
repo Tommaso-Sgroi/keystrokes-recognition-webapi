@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link
+	  href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@600&display=swap"
+	  rel="stylesheet"
+	/>
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" href="%sveltekit.assets%/favicon.png" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		%sveltekit.head%
+	</head>
+	<body data-sveltekit-preload-data="hover">
+		<div style="display: contents">%sveltekit.body%</div>
+		
+	</body>
+</html>
+
+<style>
+	*{
+		box-sizing: border-box;
+		margin: 0;
+		padding: 0;
+	}
+	body{
+		background-color: whitesmoke;
+		width: 100%;
+		height: 100vh;
+	}
+	h1{
+		text-align: center;
+		padding: 1em;
+		margin: 0 auto;
+		color:red;
+	}
+	.card{
+		margin-top : 10%;
+		margin-left: 40%;
+		padding:1em;
+		background-color: antiquewhite;
+		box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  		transition: 0.3s;
+		height: 20%;
+		width: 20%;
+	}
+	.card:hover {
+  		box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+	}
+</style>
