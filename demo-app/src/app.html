@@ -29,14 +29,44 @@
 </script>
 
 <style>
-	:root {
-		--back-color: inherit;
+	/*fix resizing on very width-small screens*/
+	@media only screen and (max-width: 900px) {
+    .container.profile {
+		font-size: small;
+       
+    }
+	.button{
+		transform: scale(0.8)
 	}
+	.button:hover{
+		transform: scale(0.9);
+	}
+	p{
+		font-size: small;
+	}
+}
+	@media only screen and (max-width: 700px) {
+    .container.profile {
+        font-size: x-small;
+    }
+	.button{
+		transform: scale(0.5)
+	}
+	.button:hover{
+		transform: scale(0.6);
+	}
+	p{
+		font-size: x-small;
+	}
+
+}
 	*{
 		box-sizing: border-box;
 		margin: 0;
 		padding: 0;
+		font-family:'Cambria', 'Cochin', 'Georgia', 'Times', 'Times New Roman';
 	}
+
 	body{
 		background-color: #C8D5B9;
 		width: 100%;
@@ -47,6 +77,11 @@
 		padding: 0.5%;
 	}
 
+	.title{
+		text-align: center;
+		padding-top: 2%;
+		font-size: xx-large;
+	}
 	.bigcard{
 		margin:70px;
 		background-color: #FAF3DD;
@@ -103,6 +138,6 @@
 
 	.button:hover{
 		box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-		transform: scale(1.01);
+		transform: scale(1.1);
 	}
 </style>
