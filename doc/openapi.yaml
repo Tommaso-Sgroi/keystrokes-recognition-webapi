@@ -31,14 +31,23 @@ paths:
       tags: [ "User"]
       operationId: createMe
       summary: Create a new user
-      description: "The user sends a Nickname. System will generate a unique Id for the user, which is created in the DB. The new Id is returned to the user."
+      description: "The user sends a Nickname and a list containing sentences keystrokes values (one list for each sentence), the keystrokes are composed by PRESS_TIME, RELEASE_TIME, HOLD_LATENCY, PP_LATENCY, RP_LATENCY. System will generate a unique Id for the user. The new Id is returned to the user."
 
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserRequestBody'
+              type: object
+              properties:
+                nickname:
+                  $ref: '#/components/schemas/UserRequestBody'
+                keystrokes:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Keystrokes'
+
+
       responses:
         '201':
           description: Success
@@ -103,63 +112,16 @@ paths:
           '401': { $ref: '#/components/responses/UserNotAuthorized' }
           '500': { $ref: '#/components/responses/InternalServerError' }
 
-  /phrases/:
-    get:
-      tags: [ "Phrase"]
-      operationId: getAllPhrases
-      summary: get all phrases
-      description: "all phrases deposited"
-      parameters:
-          - $ref: "#/components/parameters/XId"
 
-      responses:
-          '200':
-            description: Success
-            content:
-              application/json:
-                schema:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      keystroke:
-                        $ref: "#/components/schemas/KeystrokeProbe"
-                      user:
-                        $ref: "#/components/schemas/User"
-                  example:
-                    - probe:
-                        keystrokeID: 1
-                        FA: 2
-                        FR: 1
-                        GA: 10
-                        GR: 5
-                        phrase: "the lazy brown fox"
-                      user:
-                        id: 1
-                        username: "theUser"
-                    - probe:
-                        keystrokeID: 2
-                        FA: 0
-                        FR: 0
-                        GA: 15
-                        GR: 3
-                        phrase: "do something"
-                      user:
-                        id: 2
-                        username: "anotherUser"
-          '400': { $ref: "#/components/responses/BadRequest" }
-          '401': { $ref: '#/components/responses/UserNotAuthorized' }
-          '500': { $ref: '#/components/responses/InternalServerError' }
-
-  /phrases/claim/{keystrokeid}:
-    put:
-      tags: [ "Phrase"]
+  /users/{userid}/claim/:
+    post:
+      tags: [ "User"]
       operationId: claimPhrase
       summary: claim the identity of a phrase
       description: "claim the identity of a phrase, if the phrase is not of the authenticated user the false acceptance is increased, else the genuine rejection. If the phrase is of the user and it isn't accepted then the false rejection is increased, otherwise the genuine acceptance is increased"
       parameters:
         - $ref: "#/components/parameters/XId"
-        - name: keystrokeid
+        - name: userid
           schema:
             type: integer
           in: path
@@ -171,11 +133,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Keystrokes'
-
-            example:
-              - [16, 372, 0, 0]
-              - [72, 95, 293, 79]
-              - [69, 67, 120, 25]
 
 
       responses:
@@ -209,15 +166,12 @@ components:
 
   schemas:
     UserRequestBody:
-      type: object
-      properties:
-        username:
-          type: string
-          example: 'my username'
-          description: User nickname
-          pattern: '^.*?$'
-          minLength: 3
-          maxLength: 255
+      type: string
+      example: 'my username'
+      description: User nickname
+      pattern: '^.*?$'
+      minLength: 3
+      maxLength: 255
 
     User:
       type: object
@@ -253,7 +207,11 @@ components:
         items:
           type: number
           format: float
-      example: 1.0
+      example:
+        - [16, 372, 0, 0]
+        - [72, 95, 293, 79]
+        - [69, 67, 120, 25]
+
 
     KeystrokeProbe:
       type: object
@@ -306,6 +264,3 @@ components:
       description: The condition defined hasn't been fulfilled
     PaymentRequired:
       description: The request cannot be processed until the client makes a payment.
-
-
-
