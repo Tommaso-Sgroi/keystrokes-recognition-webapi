@@ -10,7 +10,7 @@ def connect_db(config):
 def load_config(path):
     import json
     with open(path, 'r') as file:
-        config = json.load(file, parse_constant=True)
+        config = json.load(file, parse_constant=True)['DB']
     return config
 
 

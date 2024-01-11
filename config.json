@@ -1,7 +1,19 @@
 {
-  "user": "root",
-  "password": "root",
-  "host": "127.0.0.1",
-  "database": "keystrokes",
-  "raise_on_warnings": true
+  "DB": {
+    "user": "root",
+    "password": "root",
+    "host": "127.0.0.1",
+    "port": "3306",
+    "database": "keystrokes",
+    "raise_on_warnings": true
+  },
+  "model": {
+    "threshold": 0.0
+  },
+
+  "API": {
+    "port": 3000,
+    "log_level": "debug",
+    "reload": true
+  }
 }
