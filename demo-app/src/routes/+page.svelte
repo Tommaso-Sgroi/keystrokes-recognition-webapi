@@ -40,6 +40,7 @@
     </label>
   </form>
   <div class="container">
+    <p>or else</p>
     <h3><button class="button" onclick="register()">Click to register</button></h3>
   </div>
 </div>
