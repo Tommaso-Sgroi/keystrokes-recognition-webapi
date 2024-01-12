@@ -16,6 +16,9 @@
         />
       </label>
     </form>
+    <div>
+        <button class="button" on:click={()=>goto("/")}>Register keystrokes</button>
+    </div>
 </div>
 
 <style>
@@ -63,7 +66,7 @@ h2{
 <script>
 
     //function that sends the phrases (and gets values?)
-
+    import {goto} from '$app/navigation';
 
     let phrases = ["Hello world","Love live smoke", "Welcome to my phrases' choice", "Ho usato chatGPT"];
     let displayPhrase = "Who run the world?";

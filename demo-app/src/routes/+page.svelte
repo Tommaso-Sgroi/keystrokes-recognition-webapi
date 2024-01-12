@@ -43,7 +43,10 @@
   {/if}
 {#if !visible}
 
-<div class="container margin">
+<div class="container">
+  <div>
+    <button class="button back" on:click={toggleVisible}>Previous</button>
+  </div>
   <form>
     <label>
       <h2 class="margin">Please choose a username to be identified</h2>
@@ -57,26 +60,12 @@
     </label>
   </form>
   
-  <Router>
-    <Route path="/insert-phrases"/>
-  </Router>
-  
-  <h3><button class="button" on:click={goToAnotherPage}>Register</button></h3>
+  <h3><button class="button" on:click={()=>goto("/insert-phrases")}>Register</button></h3>
 </div>
 {/if}
 
 </div>
-<style>
-  .margin{
-    padding:15px;
-  }
-  input{
-    margin-bottom: 10px;
-    width:100px;
-    height:30px;
-    font-size: 16px;
-  }
-</style>
+
 
 
 <script>
@@ -89,11 +78,6 @@
     visible = !visible
   }
 
-  import { Router, Link, Route } from 'svelte-routing';  
-  import { navigate } from "svelte-routing";
-  
-  function goToAnotherPage() {
-    navigate("/insert-phrases");
-        };
-        
+  import {goto} from '$app/navigation';
+
 </script>
