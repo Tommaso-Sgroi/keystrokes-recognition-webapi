@@ -14,11 +14,12 @@
           required
           type="text"
           placeholder="Write the phrase that appears on top here"
+          bind:value={phrase}
         />
       </label>
     </form>
     <div>
-        <button class="button phrase" on:click={()=>goto("/")}>Register keystrokes</button>
+        <button class="button phrase" on:click={register}>Register keystrokes</button>
     </div>
 </div>
 </div>
@@ -73,12 +74,36 @@ h2{
 
     //function that sends the phrases (and gets values?)
     import {goto} from '$app/navigation';
+    //svelte
+    import { page } from '$app/stores';
+    import  {claim}  from '../../stores/store.js';
+    import { get } from 'svelte/store';
 
-    let phrases = ["Hello world","Love live smoke", "Welcome to my phrases' choice", "Ho usato chatGPT"];
+    const value = get(claim);
+    
+    let phrases = ["Hello world","Love live smoke", "Welcome to my phrases' choice", "Girls just wanna have fun"];
     let displayPhrase = "Who run the world?";
     function appendRandomPhrase() {
         const randomIndex = Math.floor(Math.random() * phrases.length);
         displayPhrase = phrases[randomIndex];
+    }
+    //function that gets the phrases
+
+    let phrase = '';
+    let registration = 0;
+    function register(){
+        //collect values of typed phrase and send, then go back
+        console.log({phrase}, registration, value);
+        registration++;
+        appendRandomPhrase();
+        phrase = '';
+        if (value){
+            $claim = false;
+            goto("/");
+        }else if(registration == 2){
+            goto("/");
+        }
+        
     }
 
 </script>
