@@ -23,11 +23,16 @@
 <script>
   
   import {goto} from '$app/navigation';
-
-  //function that returns the users - connect to db
+  import { onMount } from 'svelte';
+  onMount(async ()=> {
+    await loadUsers();
+  })
+  
+  //function that returns the users
   async function loadUsers() {
-    const response = await fetch(`api/users/`); //url api
+    const response = await fetch(`http://localhost:3000/users/`); //url api
     const users = await response.json();
+    console.log(users)
     return { users };
   } 
   
