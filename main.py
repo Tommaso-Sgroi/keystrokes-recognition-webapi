@@ -1,8 +1,7 @@
-import json
 from os import sep as separator
 
 from service.database.db import KeystrokeDatabase
-from service.webapi.api import app
+from service.webapi.api import app, set_config_path
 from service.webapi.utility import load_db
 from service.webapi.utility import load_config
 import uvicorn
@@ -43,4 +42,6 @@ if __name__ == '__main__':
         print(probes)
     finally:
         ksdb.close()
-    uvicorn.run("main:app", **load_config('./config.json'))
+    config_path = f".{separator}config.json"
+    set_config_path(config_path)
+    uvicorn.run("main:app", **load_config(config_path))
