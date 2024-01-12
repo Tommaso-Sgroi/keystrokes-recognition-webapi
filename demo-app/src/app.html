@@ -32,32 +32,49 @@
 <style>
 	/*fix resizing on very width-small screens*/
 	@media only screen and (max-width: 900px) {
+	/*
     .container.profile {
 		font-size: small;
-       
     }
+
 	.button{
 		transform: scale(0.8)
 	}
+
 	.button:hover{
 		transform: scale(0.9);
 	}
-	p{
+
+	p,h2{
 		font-size: small;
 	}
+	*/
+	.phrasebox{
+		transform:scale(0.6);
+	}
+
+
 }
 	@media only screen and (max-width: 700px) {
+	/*
     .container.profile {
         font-size: x-small;
     }
+
 	.button{
-		transform: scale(0.5)
+		transform: scale(0.6)
 	}
+
 	.button:hover{
-		transform: scale(0.6);
+		transform: scale(0.7);
 	}
-	p{
+
+	p,h2{
 		font-size: x-small;
+	}
+	*/
+	.phrasebox{
+		transform:scale(0.45);
 	}
 
 }
@@ -83,10 +100,14 @@
 		padding-top: 2%;
 		font-size: xx-large;
 	}
+
 	.bigcard{
-		margin:70px;
+		margin-top:5%;
+		margin-left: 10%;
+		margin-right: 10%;
 		background-color: #FAF3DD;
 		box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.787);
+		box-sizing: border;
 		height:auto;
 		width:auto;
 		border-radius: 25px;
@@ -105,26 +126,28 @@
 	}
 	
 	.tab1cards {
-		display: flex;
-		flex-direction: row;
+		display: grid;
+  		grid-template-columns: repeat(auto-fit,minmax(160px, 1fr));
 		padding: 50px;
 		text-align: center;
-		display: "";
+		justify-content: center;
 	}
+
 
 	.container.profile:hover{
 		box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
 		border-radius: 5%;
 		transform: scale(1.05);
 	}
+	
 	.container.profile{
 		position: relative;
 		margin:2%;
 	}
 
 	.avatar{
-		width: 70%;
-		height: 70%;
+		max-width: 70%;
+		max-height: 70%;
 	}
 
 	.button{
@@ -136,6 +159,8 @@
 		display: inline-block;
 		font-size: 16px;
 		border: none;
+		margin-left:5px;
+		margin-right: 5px;
 	}
 
 	.button:hover{
@@ -147,10 +172,5 @@
     	padding:15px;
   	}	
 
-	input{
-		margin-bottom: 10px;
-		width:100px;
-		height:30px;
-		font-size: 16px;
-	}
+
 </style>

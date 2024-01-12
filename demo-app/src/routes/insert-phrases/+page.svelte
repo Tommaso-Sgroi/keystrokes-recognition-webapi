@@ -1,15 +1,16 @@
 <div class="title"><h4>Keystroke Enrollment</h4></div>
 
-<div class="container">
+<div class = "bigcard phrases">
+<div class="container phrases">
     <div class="container phrase">
         {#if displayPhrase}
         <h2>{displayPhrase}</h2>
         {/if}
     </div>
-    <button class="button" on:click={appendRandomPhrase}>reload</button>
+    <button class="button phrase" on:click={appendRandomPhrase}>reload</button>
     <form>
       <label>
-        <input
+        <input class="phrasebox"
           required
           type="text"
           placeholder="Write the phrase that appears on top here"
@@ -17,12 +18,17 @@
       </label>
     </form>
     <div>
-        <button class="button" on:click={()=>goto("/")}>Register keystrokes</button>
+        <button class="button phrase" on:click={()=>goto("/")}>Register keystrokes</button>
     </div>
 </div>
-
+</div>
 <style>
     
+.bigcard.phrases{
+    margin-right: 25%;
+    margin-left: 25%;
+}
+
 input {
     width: 500px;
     float: left;
@@ -30,12 +36,12 @@ input {
     line-height: 3em;
     font-size:14pt;
     border-radius: 5px;
-    border: 2px solid #FAF3DD;
-    
+    border: 2px solid #4A7C59;
+    margin-bottom:15px;
 }
-.button{
+.button.phrase{
     border-radius: 25px;
-	background-color:#FAF3DD;
+	background-color:#8FC0A9;
 	color: rgb(0, 0, 0);
 	padding: 15px 15px;
 	text-align: center;
@@ -53,7 +59,7 @@ input {
 .phrase{
     border: 2px solid #4A7C59;
     border-radius: 25px;
-    background-color: #FAF3DD;
+    background-color: white;
     
 }
 h2{
