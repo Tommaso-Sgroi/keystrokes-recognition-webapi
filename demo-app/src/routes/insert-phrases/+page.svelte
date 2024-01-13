@@ -23,50 +23,7 @@
     </div>
 </div>
 </div>
-<style>
-    
-.bigcard.phrases{
-    margin-right: 25%;
-    margin-left: 25%;
-}
 
-input {
-    width: 500px;
-    float: left;
-    height: 35px;
-    line-height: 3em;
-    font-size:14pt;
-    border-radius: 5px;
-    border: 2px solid #4A7C59;
-    margin-bottom:15px;
-}
-.button.phrase{
-    border-radius: 25px;
-	background-color:#8FC0A9;
-	color: rgb(0, 0, 0);
-	padding: 15px 15px;
-	text-align: center;
-	display: inline-block;
-	font-size: 20px;
-	border: none;
-    margin-bottom: 20px;
-    font-weight: bold;
-}
-
-.container{
-    margin: 20px auto;
-}
-
-.phrase{
-    border: 2px solid #4A7C59;
-    border-radius: 25px;
-    background-color: white;
-    
-}
-h2{
-    font-weight: normal;
-}
-</style>
 
 
 
@@ -99,11 +56,57 @@ h2{
         phrase = '';
         if (value){
             $claim = false;
+            //call function to get and send typed phrase values
             goto("/");
         }else if(registration == 2){
+            //call function to get typed phrases values and post user
             goto("/");
         }
-        
     }
 
+    
 </script>
+<style>
+    
+    .bigcard.phrases{
+        margin-right: 25%;
+        margin-left: 25%;
+    }
+    
+    input {
+        width: 500px;
+        float: left;
+        height: 35px;
+        line-height: 3em;
+        font-size:14pt;
+        border-radius: 5px;
+        border: 2px solid #4A7C59;
+        margin-bottom:15px;
+    }
+    .button.phrase{
+        border-radius: 25px;
+        background-color:#8FC0A9;
+        color: rgb(0, 0, 0);
+        padding: 15px 15px;
+        text-align: center;
+        display: inline-block;
+        font-size: 20px;
+        border: none;
+        margin-bottom: 20px;
+        font-weight: bold;
+    }
+    
+    .container{
+        margin: 20px auto;
+    }
+    
+    .phrase{
+        border: 2px solid #4A7C59;
+        border-radius: 25px;
+        background-color: white;
+        
+    }
+    h2{
+        font-weight: normal;
+    }
+</style>

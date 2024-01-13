@@ -5,11 +5,11 @@
     <h2><b>Claim Id</b></h2>
   </div>
   <div class="tab1cards">
-  {#each { length: 5 } as _,i}
+  {#each Object.values(users) as d}
      <div class="container profile" role="" on:click={navigate}> <!--make this clickable-->
       <img class="avatar" src="https://www.w3schools.com/howto/img_avatar.png" alt="users">
       <div class=container>
-        <h4><b>Elena</b></h4>
+        <h4><b>{d.name}</b></h4>
       </div>
     </div>
   {/each}
@@ -27,11 +27,11 @@
   onMount(async ()=> {
     await loadUsers();
   })
-  
+  let users=[]
   //function that returns the users
   async function loadUsers() {
     const response = await fetch(`http://localhost:3000/users/`); //url api
-    const users = await response.json();
+    users = await response.json();
     console.log(users)
     return { users };
   } 
