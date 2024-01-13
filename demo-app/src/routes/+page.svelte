@@ -6,7 +6,7 @@
   </div>
   <div class="tab1cards">
   {#each Object.values(users) as d}
-     <div class="container profile" role="" on:click={navigate}> <!--make this clickable-->
+     <div class="container profile" role="" on:click={navigate(d.id)}> <!--make this clickable-->
       <img class="avatar" src="https://www.w3schools.com/howto/img_avatar.png" alt="users">
       <div class=container>
         <h4><b>{d.name}</b></h4>
@@ -37,12 +37,12 @@
   } 
   
   
-  function navigate(){
+  function navigate(id){
     $claim = true
+    $userid = id;
+    console.log($userid)
     goto("/insert-phrases")
   }
-  import { claim } from '../stores/store.js';
-
-  $: toggle = $claim; // Create a reactive local variable
+  import { claim, userid } from '../stores/store.js';
 
 </script>

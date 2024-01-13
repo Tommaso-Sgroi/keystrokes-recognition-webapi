@@ -15,57 +15,123 @@
           type="text"
           placeholder="Write the phrase that appears on top here"
           bind:value={phrase}
+          on:keydown={handleKeyDown}
+          on:keyup={handleKeyUp}
         />
       </label>
     </form>
     <div>
-        <button class="button phrase" on:click={register}>Register keystrokes</button>
+        <button class="button phrase" on:click={send}>Register keystrokes</button>
     </div>
 </div>
 </div>
 
-
-
-
 <script>
 
-    //function that sends the phrases (and gets values?)
     import {goto} from '$app/navigation';
-    //svelte
-    import { page } from '$app/stores';
-    import  {claim}  from '../../stores/store.js';
-    import { get } from 'svelte/store';
-
-    const value = get(claim);
+    import  {claim, userid, username}  from '../../stores/store.js';
     
     let phrases = ["Hello world","Love live smoke", "Welcome to my phrases' choice", "Girls just wanna have fun"];
     let displayPhrase = "Who run the world?";
+
     function appendRandomPhrase() {
         const randomIndex = Math.floor(Math.random() * phrases.length);
         displayPhrase = phrases[randomIndex];
+        console.log(keyPressTimes);
     }
-    //function that gets the phrases
 
     let phrase = '';
     let registration = 0;
-    function register(){
-        //collect values of typed phrase and send, then go back
-        console.log({phrase}, registration, value);
+    //function that sends registration or claim values
+    function send(){
+        console.log({phrase}, registration, $claim, $userid);
         registration++;
         appendRandomPhrase();
         phrase = '';
-        if (value){
+        if ($claim){
             $claim = false;
-            //call function to get and send typed phrase values
+            //claimId();
             goto("/");
         }else if(registration == 2){
-            //call function to get typed phrases values and post user
+            //registerUser();
+            console.log($username)
             goto("/");
         }
     }
-
+    //calculate press, release, hold, pp...
     
+    let keyPressTimes = {};
+    let times = [];
+    const handleKeyDown = (event) => {
+        const key = event.key;
+        keyPressTimes[key] = [];
+        keyPressTimes[key].push(Date.now());
+        console.log(times, keyPressTimes)
+    };
+
+    const handleKeyUp = (event) => {
+        let key = event.key;
+        const pressStartTime = keyPressTimes[key][0];
+        if (pressStartTime !== undefined) {
+        const hold = Date.now() - pressStartTime;
+        console.log(`Key "${key}" was pressed for ${hold} milliseconds`);
+        keyPressTimes[key].push(Date.now());
+        keyPressTimes[key].push(hold);
+        times.push(keyPressTimes[key]);
+        delete keyPressTimes[key];
+        }
+    };
+    //verification - claim ID and send phrase
+    async function claimId() {
+		const res = await fetch(`http://localhost:3000/users/${userid}/claim/`, {
+			method: 'POST',
+			body: JSON.stringify({
+				foo,
+				bar
+			})
+		})
+
+		const json = await res.json()
+		result = JSON.stringify(json)
+	}
+
+    //registration - write x phrases and send with username
+    async function registerUser() {
+		const res = await fetch(`http://localhost:3000/user/`, {
+			method: 'POST',
+			body: JSON.stringify({
+                "nickname": $username,
+                "keystrokes": [
+                    [
+                    [
+                        16,
+                        372,
+                        0,
+                        0
+                    ],
+                    [
+                        72,
+                        95,
+                        293,
+                        79
+                    ],
+                    [
+                        69,
+                        67,
+                        120,
+                        25
+                    ]
+                    ]
+                ]
+			})
+		})
+
+		const json = await res.json()
+		result = JSON.stringify(json)
+	}
+
 </script>
+
 <style>
     
     .bigcard.phrases{

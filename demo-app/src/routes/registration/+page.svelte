@@ -1,27 +1,35 @@
 <div class="title"><h4>Keystroke Enrollment</h4></div>
 <div class="bigcard registration">
   <div class="container"> 
-    
-    <form>
+    <form on:submit|preventDefault={handleSubmit}>
       <label>
-        <h2 class="margin">Please choose a username to be identified</h2>
+        <h2 class="margin" id="name">Please choose a username to be identified</h2>
         <input
           required
           type="text"
           placeholder="user123"
           v-model="username"
+          bind:value={$username}
         />
       </label>
-    </form>
-    
-    <h3>
-      <button class="button" on:click={()=>goto("/insert-phrases")}>Register</button>
+      <h3><button class="button" type="submit">Register</button>
       <button class="button" on:click={()=>goto("/")}>Go Back</button>
     </h3>
+    </form>
+    
   </div>
   </div>
   <script>
     import {goto} from '$app/navigation';
+    import {username} from '../../stores/store.js';
+    
+    function handleSubmit(){
+      if ($username.trim() !== "") {
+        goto("/insert-phrases");
+      } else {
+        alert("Please enter a value.");
+      }
+    }
   </script>
 
   <style>
