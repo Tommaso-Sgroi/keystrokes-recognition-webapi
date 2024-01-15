@@ -1,6 +1,6 @@
 <div class="title"><h4>Keystroke Enrollment</h4></div>
-
 <div class = "bigcard phrases">
+{#if !claimingDone}
 <div class="container phrases">
     <div class="container phrase">
         {#if displayPhrase}
@@ -24,6 +24,16 @@
         <button class="button phrase" on:click={send}>Register keystrokes</button>
     </div>
 </div>
+{:else}
+<div class="container phrases">
+<div>
+    <h2 class="result">Your result is: {result}</h2>
+</div>
+<div>
+    <button class="button phrase" on:click={()=>goto("/")}>Go back home</button>
+</div>
+</div>
+{/if}
 </div>
 
 <script>
@@ -33,6 +43,8 @@
     
     let phrases = ["Hello world","Love live smoke", "Welcome to my phrases' choice", "Girls just wanna have fun"];
     let displayPhrase = "Who run the world?";
+    let claimingDone = false;
+    let result = "";
 
     //function that load another phrase to write
     function appendRandomPhrase() {
@@ -62,13 +74,13 @@
         appendRandomPhrase();
         phrase = '';
         if ($claim){
-            if(claiming == 5)
+            if(claiming == 1)
             {
                 $claim = false;
                 claimId();
                 console.log(keystrokes);
                 console.log($username)
-                goto("/");
+                claimingDone = true;
             }
             
         }else if(registration == 2){
@@ -82,6 +94,7 @@
     //register press, release and hold time
     let keyPressTimes = {};
     let times = [[0,0,0,0]];
+
     const handleKeyDown = (event) => {
         const key = event.key;
         let code = event.which;
@@ -128,8 +141,9 @@
 		})
 
 		const json = await res.json();
-		let result = JSON.stringify(json);
-        console.log(result);
+		result = JSON.stringify(json);
+        result = result.replace('{','');
+        result = result.replace('}','');
 	}
 
     //registration - write x phrases and send with username
@@ -143,8 +157,8 @@
 		})
 
 		const json = await res.json();
-		let result = JSON.stringify(json);
-        console.log(result);
+		result = JSON.stringify(json);
+
 	}
 
 </script>
@@ -191,5 +205,9 @@
     }
     h2{
         font-weight: normal;
+    }
+
+    .result{
+        margin-bottom:20px;
     }
 </style>
