@@ -23,6 +23,7 @@
     import {goto} from '$app/navigation';
     import {username} from '../../stores/store.js';
     
+    //check if username is inserted and in case send to phrases
     function handleSubmit(){
       if ($username.trim() !== "") {
         goto("/insert-phrases");

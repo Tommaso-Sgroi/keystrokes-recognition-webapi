@@ -34,6 +34,7 @@
     let phrases = ["Hello world","Love live smoke", "Welcome to my phrases' choice", "Girls just wanna have fun"];
     let displayPhrase = "Who run the world?";
 
+    //function that load another phrase to write
     function appendRandomPhrase() {
         const randomIndex = Math.floor(Math.random() * phrases.length);
         displayPhrase = phrases[randomIndex];
@@ -42,36 +43,60 @@
 
     let phrase = '';
     let registration = 0;
+    let claiming = 0;
+    let keystrokes = [];
+
     //function that sends registration or claim values
     function send(){
         console.log({phrase}, registration, $claim, $userid);
         registration++;
+        claiming ++;
+        let phrase_key = [];
+        for(let i = 1; i<times.length; i++)
+        {
+            phrase_key.push(calculateParams(times[i-1],times[i]));
+        }
+        keystrokes.push(phrase_key);
+        keyPressTimes = {};
+        times = [];
         appendRandomPhrase();
         phrase = '';
         if ($claim){
-            $claim = false;
-            //claimId();
-            goto("/");
+            if(claiming == 5)
+            {
+                $claim = false;
+                claimId();
+                console.log(keystrokes);
+                console.log($username)
+                goto("/");
+            }
+            
         }else if(registration == 2){
-            //registerUser();
+            registerUser();
+            console.log(keystrokes);
             console.log($username)
             goto("/");
         }
     }
-    //calculate press, release, hold, pp...
     
+    //register press, release and hold time
     let keyPressTimes = {};
-    let times = [];
+    let times = [[0,0,0,0]];
     const handleKeyDown = (event) => {
         const key = event.key;
+        let code = event.which;
+        console.log(key);
+        if(code=="219")code = 191;
+        console.log(code);
         keyPressTimes[key] = [];
+        keyPressTimes[key].push(code);
         keyPressTimes[key].push(Date.now());
         console.log(times, keyPressTimes)
     };
 
     const handleKeyUp = (event) => {
         let key = event.key;
-        const pressStartTime = keyPressTimes[key][0];
+        const pressStartTime = keyPressTimes[key][1];
         if (pressStartTime !== undefined) {
         const hold = Date.now() - pressStartTime;
         console.log(`Key "${key}" was pressed for ${hold} milliseconds`);
@@ -81,18 +106,30 @@
         delete keyPressTimes[key];
         }
     };
+
+    //calculate values for evaluation
+    function calculateParams(i, j){
+       
+        let h = Number(j[3]);
+        let pp = Number(j[1]-i[1]);
+        let rp = Number(j[1]-i[2]);
+        //If considering first keystroke
+        if(pp>1000){pp=0;rp=0;}
+        return [Number(j[0]), Math.round(h), Math.round(pp), Math.round(rp)]
+    }
+
     //verification - claim ID and send phrase
     async function claimId() {
-		const res = await fetch(`http://localhost:3000/users/${userid}/claim/`, {
+		const res = await fetch(`http://localhost:3000/users/${$userid}/claim/`, {
 			method: 'POST',
 			body: JSON.stringify({
-				foo,
-				bar
+				"keystrokes":[keystrokes] 
 			})
 		})
 
-		const json = await res.json()
-		result = JSON.stringify(json)
+		const json = await res.json();
+		let result = JSON.stringify(json);
+        console.log(result);
 	}
 
     //registration - write x phrases and send with username
@@ -101,33 +138,13 @@
 			method: 'POST',
 			body: JSON.stringify({
                 "nickname": $username,
-                "keystrokes": [
-                    [
-                    [
-                        16,
-                        372,
-                        0,
-                        0
-                    ],
-                    [
-                        72,
-                        95,
-                        293,
-                        79
-                    ],
-                    [
-                        69,
-                        67,
-                        120,
-                        25
-                    ]
-                    ]
-                ]
+                "keystrokes": [keystrokes]
 			})
 		})
 
-		const json = await res.json()
-		result = JSON.stringify(json)
+		const json = await res.json();
+		let result = JSON.stringify(json);
+        console.log(result);
 	}
 
 </script>

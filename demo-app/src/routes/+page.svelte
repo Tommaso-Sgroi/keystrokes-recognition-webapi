@@ -28,6 +28,7 @@
     await loadUsers();
   })
   let users=[]
+
   //function that returns the users
   async function loadUsers() {
     const response = await fetch(`http://localhost:3000/users/`); //url api
@@ -36,7 +37,7 @@
     return { users };
   } 
   
-  
+  //function that handles navigation through pages
   function navigate(id){
     $claim = true
     $userid = id;
