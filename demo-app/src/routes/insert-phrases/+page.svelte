@@ -26,12 +26,13 @@
 </div>
 {:else}
 <div class="container phrases">
-<div>
-    <h2 class="result">Your result is: {result}</h2>
-</div>
-<div>
-    <button class="button phrase" on:click={()=>goto("/")}>Go back home</button>
-</div>
+    <div>
+        <h2 class="result">Your result is: {result.likelihood}</h2>
+        <h2 class="result">whith a score of: {result.passed}</h2>
+    </div>
+    <div>
+        <button class="button phrase" on:click={()=>goto("/")}>Go back home</button>
+    </div>
 </div>
 {/if}
 </div>
@@ -41,8 +42,9 @@
     import {goto} from '$app/navigation';
     import  {claim, userid, username}  from '../../stores/store.js';
     
-    let phrases = ["Hello world","Love live smoke", "Welcome to my phrases' choice", "Girls just wanna have fun"];
-    let displayPhrase = "Who run the world?";
+    let phrases = ["The pen is on the table", "I will be with you in a moment", "Welcome to my phrases' choice", "Think before you speak", "It's raining cats and dogs",
+                    "Veni Vidi Vici", "Work in progress", "I'm feeling blue today", "To shoot to a little mouse with a cannon", "Walking on sunshine", "A cat has nine lives"];
+    let displayPhrase = "Hello world";
     let claimingDone = false;
     let result = "";
 
@@ -83,7 +85,7 @@
                 claimingDone = true;
             }
             
-        }else if(registration == 2){
+        }else if(registration == 4){
             registerUser();
             console.log(keystrokes);
             console.log($username)
@@ -141,9 +143,8 @@
 		})
 
 		const json = await res.json();
-		result = JSON.stringify(json);
-        result = result.replace('{','');
-        result = result.replace('}','');
+        result = JSON.stringify(json);
+		result = JSON.parse(result);
 	}
 
     //registration - write x phrases and send with username
