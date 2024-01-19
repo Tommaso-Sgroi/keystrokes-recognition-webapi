@@ -4,12 +4,12 @@ from fastapi import FastAPI, HTTPException, Request
 from .classes import *
 from .utility import load_db, load_model_config
 from fastapi.middleware.cors import CORSMiddleware
-from service.keystroke_recognition.model import load_model
+from service.keystroke_recognition.model import load_model, KeystrokeRecognitionModel
 from os import sep as separator
 
 config_path = f".{separator}config.json"
 keystroke_database = load_db(path=config_path)
-keystroke_model = load_model('./fake/path/to/model.h5', config=load_model_config(path=config_path))
+keystroke_model = load_model(None)  # KeystrokeRecognitionModel(config_path)
 
 
 def set_config_path(_config_path):
