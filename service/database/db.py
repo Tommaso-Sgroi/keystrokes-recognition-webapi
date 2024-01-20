@@ -108,7 +108,7 @@ class KeystrokeDatabase(object):
         try:
             cursor.execute('SELECT keystroke FROM probe where userid=%s', (userid,))
             probes = cursor.fetchall()
-            probes = [probes[i][0] for i in range(len(probes))]
+            probes = [json.loads(probes[i][0]) for i in range(len(probes))]
             return probes
         finally:
             cursor.close()

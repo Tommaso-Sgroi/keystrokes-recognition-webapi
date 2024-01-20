@@ -4,12 +4,14 @@ from fastapi import FastAPI, HTTPException, Request
 from .classes import *
 from .utility import load_db, load_model_config
 from fastapi.middleware.cors import CORSMiddleware
-from service.keystroke_recognition.model import load_model
+from service.keystroke_recognition.model import load_model, KeystrokeRecognitionModel
 from os import sep as separator
+import numpy as np
 
 config_path = f".{separator}config.json"
 keystroke_database = load_db(path=config_path)
-keystroke_model = load_model('./fake/path/to/model.h5', config=load_model_config(path=config_path))
+keystroke_model = KeystrokeRecognitionModel(config_path)
+print(keystroke_model.summary())
 
 
 def set_config_path(_config_path):
@@ -67,17 +69,17 @@ async def claim_phrase(userid: int, r: Request):
     print(userid, keystroke)
     claiming_probes = keystroke_database.get_user_probes(userid)
 
-    # predictions = []
-    # for probe in claiming_probes:
-    #     probe = json.loads(probe)
-    #     prediction = keystroke_model.predict(keystroke, probe)
-    #     predictions.append(prediction[0])
+    # passed, likelihood = passed.tolist(), likelihood.tolist()
+    predictions = []
+    for probe in claiming_probes:
+        _, likelihood = keystroke_model.predict(keystroke, probe)
+        predictions.append(float(np.sum(likelihood)))
 
     # likelihood = sum(predictions) / len(predictions)
-    # passed = likelihood > keystroke_model.threshold
-    # return prediction
+    likelihood = max(predictions)
+    passed = bool(likelihood >= keystroke_model.threshold)
+    # add padding or truncate
 
-    passed, likelihood = keystroke_model.predict(keystroke, probe_data=claiming_probes.pop())
-    claim_result = {"passed": passed, "likelihood": likelihood}
-
+    claim_result = PredictionResponse(likelihood=likelihood, prediction=passed)
+    # claim_result = list(claim_result.items())
     return claim_result

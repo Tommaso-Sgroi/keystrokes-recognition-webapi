@@ -1,5 +1,15 @@
 from random import random
+from joblib import load
+from os import sep
+import numpy as np
+from keras import Input, Model
+from keras.src.layers import Dense, Masking, Lambda, Flatten
+from keras import backend as K
+import tensorflow as tf
 
+physical_devices = tf.config.list_physical_devices('GPU')
+for device in physical_devices:
+    tf.config.experimental.set_memory_growth(device, True)
 
 class ModelInterface(object):
     def __init__(self, shape, threshold=0.5):
@@ -15,10 +25,120 @@ class RandomModel(ModelInterface):
         return pred, (pred > self.threshold) and len(input_data) > 0 and len(probe_data) > 0
 
 
-def load_model(model_path='./model', config=None):
+def create_siamese_model(input_shape):
+    def create_feature_extractor(input_shape):
+        input_layer = Input(shape=input_shape)
+        x = Dense(128, activation='relu')(input_layer)
+        x = Dense(64, activation='relu')(x)
+        x = Dense(32, activation='relu')(x)
+        # x = Dense(16, activation='relu')(x)
+        # output_layer = Dense(8, activation='relu')(x)
+        return Model(inputs=input_layer, outputs=x)
+
+    def create_decision_module(input_layer):
+        x = Dense(64, activation='relu')(input_layer)
+        x = Dense(32, activation='relu')(x)
+        # x = Dense(16, activation='relu')(x)
+        output_layer = Dense(1, activation='sigmoid')(x)
+        return output_layer
+
+    input_a = Input(shape=input_shape)
+    input_b = Input(shape=input_shape)
+
+    # mask = Masking(mask_value=0, input_shape=input_shape)
+    masked_a = Masking(mask_value=0, input_shape=input_shape)(input_a)
+    masked_b = Masking(mask_value=0, input_shape=input_shape)(input_b)
+
+    # Create a shared feature extractor
+    feature_extractor = create_feature_extractor(input_shape)
+
+    # Connect both inputs to the shared feature extractor
+    feature_vector_a = feature_extractor(masked_a)
+    feature_vector_b = feature_extractor(masked_b)
+
+    # concat = Concatenate()([feature_vector_A, feature_vector_B])
+    # dense = Dense(64, activation='relu')(concat)
+
+    # distance = Lambda(euclidean_distance, output_shape=(8))([feature_vector_A, feature_vector_B])
+    # concat = Concatenate()([feature_vector_A, feature_vector_B])
+    l1_distance = Lambda(lambda tensors: K.abs(tensors[0] - tensors[1]))([feature_vector_a, feature_vector_b])
+
+    decision_module = create_decision_module(l1_distance)
+    decision_module = Flatten()(decision_module)
+    decision_module = Dense(1, activation='sigmoid')(decision_module)
+    sm = Model(inputs=[input_a, input_b], outputs=decision_module)
+
+    return sm
+
+
+class KeystrokeRecognitionModel(ModelInterface):
+
+    def __init__(self, config_path: str, threshold=0.5):
+        import json
+        with open(config_path, 'r', encoding='utf-8') as f:
+            config = json.load(f)['model']
+        self.scaler = load(config["scaler_path"])
+        shape = config['shape']
+        threshold = config['threshold']
+        self.model = create_siamese_model(shape)
+        self.model.load_weights(f'{config["model_path"]}')
+        super().__init__(shape=shape, threshold=threshold)
+
+    def predict(self, input_data, probe_data):
+        # apply scaling
+        input_data = np.array([input_data, probe_data])
+
+        n_samples, nx, ny = input_data.shape
+        my_data = input_data.reshape((1, n_samples * nx * ny))
+
+        my_data = self.scaler.transform(my_data)
+        # probe_data = self.scaler.transform(probe_data)
+
+        my_data = my_data.reshape(n_samples, nx, ny)
+        # probe_data = probe_data.reshape(self.shape)
+        input_data = my_data[0, :, :]
+        probe_data = my_data[1, :, :]
+        input_data = input_data.reshape((1, *input_data.shape))
+        probe_data = probe_data.reshape((1, *probe_data.shape))
+        try:
+            pred = self.model.predict([input_data, probe_data])
+        except Exception as e:
+            print(e)
+            return
+
+        return pred > self.threshold, pred
+        # return self.model.predict([[input_data], [probe_data]]) > self.threshold
+
+    def normalize_dataset(self, X_input, X_probe):
+        x_trainnn = np.array(X_input)
+        x_testtt = np.array(X_probe)
+
+        nsamples_test, nx, ny, nz = x_testtt.shape
+        nsamples_train, nx, ny, nz = x_trainnn.shape
+
+        x_trainnn = x_trainnn.reshape((nsamples_train, nx * ny * nz))
+        x_testtt = x_testtt.reshape((nsamples_test, nx * ny * nz))
+
+        # apply normalizations
+        x_trainnn = self.scaler.transform(x_trainnn)
+        x_trainnn = x_trainnn.reshape((nsamples_train, nx, ny, nz))
+
+        x_testtt = self.scaler.transform(x_testtt)
+        x_testtt = x_testtt.reshape((nsamples_test, nx, ny, nz))
+
+        # separate siamese keystrokes
+        _a, _b = x_trainnn[:, 0, :, :], x_trainnn[:, 1, :, :]
+
+        _a_probe, _b_probe = x_testtt[:, 0, :, :], x_testtt[:, 1, :, :]
+
+        return _a, _b, _a_probe, _b_probe
+
+    def summary(self):
+        return self.model.summary()
+
+
+def load_model(config: dict):
     # TODO load real model
     if config is None:
         config = dict()
-    model = RandomModel(shape=(0, 0, 0, 0), **config)
-    # return a placeholder random model
-    return model
+        return RandomModel(shape=(0, 0, 0, 0), **config)
