@@ -1,11 +1,15 @@
 from random import random
 from joblib import load
 from os import sep
-
+import numpy as np
 from keras import Input, Model
 from keras.src.layers import Dense, Masking, Lambda, Flatten
 from keras import backend as K
+import tensorflow as tf
 
+physical_devices = tf.config.list_physical_devices('GPU')
+for device in physical_devices:
+    tf.config.experimental.set_memory_growth(device, True)
 
 class ModelInterface(object):
     def __init__(self, shape, threshold=0.5):
@@ -81,7 +85,56 @@ class KeystrokeRecognitionModel(ModelInterface):
         super().__init__(shape=shape, threshold=threshold)
 
     def predict(self, input_data, probe_data):
-        return self.model.predict([input_data, probe_data]) > self.threshold
+        # apply scaling
+        input_data = np.array([input_data, probe_data])
+
+        n_samples, nx, ny = input_data.shape
+        my_data = input_data.reshape((1, n_samples * nx * ny))
+
+        my_data = self.scaler.transform(my_data)
+        # probe_data = self.scaler.transform(probe_data)
+
+        my_data = my_data.reshape(n_samples, nx, ny)
+        # probe_data = probe_data.reshape(self.shape)
+        input_data = my_data[0, :, :]
+        probe_data = my_data[1, :, :]
+        input_data = input_data.reshape((1, *input_data.shape))
+        probe_data = probe_data.reshape((1, *probe_data.shape))
+        try:
+            pred = self.model.predict([input_data, probe_data])
+        except Exception as e:
+            print(e)
+            return
+
+        return pred > self.threshold, pred
+        # return self.model.predict([[input_data], [probe_data]]) > self.threshold
+
+    def normalize_dataset(self, X_input, X_probe):
+        x_trainnn = np.array(X_input)
+        x_testtt = np.array(X_probe)
+
+        nsamples_test, nx, ny, nz = x_testtt.shape
+        nsamples_train, nx, ny, nz = x_trainnn.shape
+
+        x_trainnn = x_trainnn.reshape((nsamples_train, nx * ny * nz))
+        x_testtt = x_testtt.reshape((nsamples_test, nx * ny * nz))
+
+        # apply normalizations
+        x_trainnn = self.scaler.transform(x_trainnn)
+        x_trainnn = x_trainnn.reshape((nsamples_train, nx, ny, nz))
+
+        x_testtt = self.scaler.transform(x_testtt)
+        x_testtt = x_testtt.reshape((nsamples_test, nx, ny, nz))
+
+        # separate siamese keystrokes
+        _a, _b = x_trainnn[:, 0, :, :], x_trainnn[:, 1, :, :]
+
+        _a_probe, _b_probe = x_testtt[:, 0, :, :], x_testtt[:, 1, :, :]
+
+        return _a, _b, _a_probe, _b_probe
+
+    def summary(self):
+        return self.model.summary()
 
 
 def load_model(config: dict):
