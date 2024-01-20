@@ -1,8 +1,9 @@
+import http.client
 import json
 
 from fastapi import FastAPI, HTTPException, Request
 from .classes import *
-from .utility import load_db, load_model_config
+from .utility import load_db, load_model_config, add_padding
 from fastapi.middleware.cors import CORSMiddleware
 from service.keystroke_recognition.model import load_model, KeystrokeRecognitionModel
 from os import sep as separator
@@ -22,7 +23,7 @@ def set_config_path(_config_path):
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173","http://127.0.0.1:5173"],
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -51,6 +52,7 @@ async def create_user(r: Request):
     userid = keystroke_database.insert_new_user(data['nickname'])
     for keystroke in data['keystrokes']:
         # can be optimized using a single query
+        keystroke = add_padding(keystroke)
         keystroke_database.insert_keystroke(userid, keystroke)
 
     return userid
@@ -60,6 +62,11 @@ async def create_user(r: Request):
 async def claim_phrase(userid: int, r: Request):
     data = await r.body()
     keystroke = json.loads(data)
+
+    for i in range(len(keystroke)):
+        keystroke[i] = add_padding(keystroke[i])
+
+    keystroke = keystroke[-1]
 
     # check user existence
     if not keystroke_database.user_exists(userid):
@@ -71,9 +78,13 @@ async def claim_phrase(userid: int, r: Request):
 
     # passed, likelihood = passed.tolist(), likelihood.tolist()
     predictions = []
-    for probe in claiming_probes:
-        _, likelihood = keystroke_model.predict(keystroke, probe)
-        predictions.append(float(np.sum(likelihood)))
+    try:
+        for probe in claiming_probes:
+            _, likelihood = keystroke_model.predict(keystroke, probe)
+            predictions.append(float(np.sum(likelihood)))
+    except Exception as e:
+        print(e)
+        raise HTTPException(status_code=http.client.BAD_REQUEST)
 
     # likelihood = sum(predictions) / len(predictions)
     likelihood = max(predictions)

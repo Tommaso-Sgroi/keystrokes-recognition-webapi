@@ -28,7 +28,7 @@
 <div class="container phrases">
     <div>
         <h2 class="result">Your result is: {result.likelihood}</h2>
-        <h2 class="result">whith a score of: {result.passed}</h2>
+        <h2 class="result">whith a score of: {result.prediction}</h2>
     </div>
     <div>
         <button class="button phrase" on:click={()=>goto("/")}>Go back home</button>
@@ -136,9 +136,7 @@
     async function claimId() {
 		const res = await fetch(`http://localhost:3000/users/${$userid}/claim/`, {
 			method: 'POST',
-			body: JSON.stringify({
-				"keystrokes":[keystrokes] 
-			})
+			body: JSON.stringify(keystrokes)
 		})
 
 		const json = await res.json();
