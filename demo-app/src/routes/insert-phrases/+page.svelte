@@ -76,16 +76,15 @@
         appendRandomPhrase();
         phrase = '';
         if ($claim){
-            if(claiming == 1)
+            if(claiming == 3)
             {
                 $claim = false;
                 claimId();
-                console.log(keystrokes);
                 console.log($username)
                 claimingDone = true;
             }
             
-        }else if(registration == 4){
+        }else if(registration == 5){
             registerUser();
             console.log(keystrokes);
             console.log($username)
@@ -144,6 +143,7 @@
 
 		const json = await res.json();
         result = JSON.stringify(json);
+        console.log(result)
 		result = JSON.parse(result);
 	}
 
