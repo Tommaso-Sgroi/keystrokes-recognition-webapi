@@ -94,3 +94,4 @@ async def claim_phrase(userid: int, r: Request):
     claim_result = PredictionResponse(likelihood=likelihood, prediction=passed)
     # claim_result = list(claim_result.items())
     return claim_result
+ 

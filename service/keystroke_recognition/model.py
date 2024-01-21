@@ -81,7 +81,7 @@ class KeystrokeRecognitionModel(ModelInterface):
         shape = config['shape']
         threshold = config['threshold']
         self.model = create_siamese_model(shape)
-        self.model.load_weights(f'{config["model_path"]}')
+        self.model.load_weights(f'{config["model_path"]}').expect_partial()
         super().__init__(shape=shape, threshold=threshold)
 
     def predict(self, input_data, probe_data):
@@ -100,6 +100,8 @@ class KeystrokeRecognitionModel(ModelInterface):
         probe_data = my_data[1, :, :]
         input_data = input_data.reshape((1, *input_data.shape))
         probe_data = probe_data.reshape((1, *probe_data.shape))
+
+        print(input_data.shape, probe_data.shape)
         try:
             pred = self.model.predict([input_data, probe_data])
         except Exception as e:

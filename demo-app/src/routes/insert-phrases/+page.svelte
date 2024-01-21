@@ -26,10 +26,18 @@
 </div>
 {:else}
 <div class="container phrases">
-    <div>
-        <h2 class="result">Your result is: {result.likelihood}</h2>
-        <h2 class="result">whith a score of: {result.prediction}</h2>
-    </div>
+    
+        {#if isLoading}
+        <h2>Loading...</h2>
+        {:else}
+            {#if result.likelihood !== undefined}
+                <!-- Display your API response data here -->
+                <h2 class="result">Your result is: {result.prediction}</h2>
+                <h2 class="result">whith a score of: {result.likelihood}</h2>
+            {:else}
+            <h2>No data available.</h2>
+            {/if}
+        {/if}
     <div>
         <button class="button phrase" on:click={()=>goto("/")}>Go back home</button>
     </div>
@@ -42,9 +50,34 @@
     import {goto} from '$app/navigation';
     import  {claim, userid, username}  from '../../stores/store.js';
     
-    let phrases = ["The pen is on the table", "I will be with you in a moment", "Welcome to my phrases' choice", "Think before you speak", "It's raining cats and dogs",
-                    "Veni Vidi Vici", "Work in progress", "I'm feeling blue today", "To shoot to a little mouse with a cannon", "Walking on sunshine", "A cat has nine lives"];
-    let displayPhrase = "Hello world";
+    let phrases = [
+        "Will you and KB be around this afternoon?",
+        "The others raise their eyebrows.",
+        "Through this account cash flows to corporate.",
+        "I'm waiting until she comes home.",
+        "This year I can walk and it's so much better.",
+        "We can discuss options early next week.",
+        "I am really not wanting to come back.",
+        "Ava, do we need to worry about this?",
+        "Throw it away and not let it touch your heart.",
+        "Others voting against represented the defense ministry.",
+        "That would be a fitting memorial to those who died.",
+        "If lunch doesn't work then how about coffee?",
+        "We don't recommend McNair this week as a result.",
+        "If it needs to be paid, we will need to add the day to the deal.",
+        "Emerson Fittipaldi has never had an engine this good.",
+        "I'll take up my problem with weak Scott H.",
+        "The buses will be identified by their cities of origin.",
+        "Sources said the officers will be part of the coordination office.",
+        "A report Thursday showed wholesale prices fell 0.1 percent in April.",
+        "But there have been so many changes in plans that I'm not surprised.",
+        "Also, it appears no payment is required tomorrow.",
+        "Juppe described Emile Jonassaint as a puppet with no legitimacy.",
+        "Tricia needs to know if she needs to invoice them or not.",
+        "We are proceeding with a great reception so far."
+    ]
+;
+    let displayPhrase = "To shoot a little mouse with a cannon.";
     let claimingDone = false;
     let result = "";
 
@@ -131,18 +164,23 @@
         if(pp>1000){pp=0;rp=0;}
         return [Number(j[0]), Math.round(h), Math.round(pp), Math.round(rp)]
     }
-
+    let isLoading = true;
     //verification - claim ID and send phrase
     async function claimId() {
-		const res = await fetch(`http://localhost:3000/users/${$userid}/claim/`, {
+		try{
+           
+            const res = await fetch(`http://localhost:3000/users/${$userid}/claim/`, {
 			method: 'POST',
 			body: JSON.stringify(keystrokes)
-		})
-
-		const json = await res.json();
-        result = JSON.stringify(json);
-        console.log(result)
-		result = JSON.parse(result);
+            })
+            isLoading = false
+            const json = await res.json()
+            result = JSON.stringify(json)
+            result = JSON.parse(result)
+        }catch(error){
+            console.error('Error fetching data:', error);
+            isLoading = false;
+        }
 	}
 
     //registration - write x phrases and send with username
