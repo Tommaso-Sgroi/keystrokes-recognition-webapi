@@ -151,7 +151,7 @@
 			method: 'POST',
 			body: JSON.stringify({
                 "nickname": $username,
-                "keystrokes": [keystrokes]
+                "keystrokes": keystrokes
 			})
 		})
 
