@@ -139,6 +139,7 @@
         keyPressTimes[key].push(code);
         keyPressTimes[key].push(Date.now());
         console.log(times, keyPressTimes)
+        console.log(times)
     };
 
     const handleKeyUp = (event) => {
