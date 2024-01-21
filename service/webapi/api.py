@@ -13,6 +13,7 @@ config_path = f".{separator}config.json"
 keystroke_database = load_db(path=config_path)
 keystroke_model = KeystrokeRecognitionModel(config_path)
 print(keystroke_model.summary())
+PADDING = 70
 
 
 def set_config_path(_config_path):
@@ -52,7 +53,7 @@ async def create_user(r: Request):
     userid = keystroke_database.insert_new_user(data['nickname'])
     for keystroke in data['keystrokes']:
         # can be optimized using a single query
-        keystroke = add_padding(keystroke)
+        keystroke = add_padding(keystroke, PADDING)
         keystroke_database.insert_keystroke(userid, keystroke)
 
     return userid
@@ -64,7 +65,7 @@ async def claim_phrase(userid: int, r: Request):
     keystroke = json.loads(data)
 
     for i in range(len(keystroke)):
-        keystroke[i] = add_padding(keystroke[i])
+        keystroke[i] = add_padding(keystroke[i], PADDING)
 
     keystroke = keystroke[-1]
 
@@ -80,6 +81,7 @@ async def claim_phrase(userid: int, r: Request):
     predictions = []
     try:
         for probe in claiming_probes:
+            probe = add_padding(probe, PADDING)
             _, likelihood = keystroke_model.predict(keystroke, probe)
             predictions.append(float(np.sum(likelihood)))
     except Exception as e:

@@ -24,6 +24,6 @@ def add_padding(data, padding=70):
     if len(data) >= padding:
         # truncate
         return data[:padding]
-    data.extend([[0, 0, 0, 0]] * (padding - len(data)))
+    data.extend([[0 for _ in range(len(data[-1]))]] * (padding - len(data)))
     return data
 

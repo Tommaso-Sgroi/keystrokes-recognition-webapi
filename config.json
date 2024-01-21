@@ -9,9 +9,9 @@
   },
   "model": {
     "threshold": 0.5,
-    "model_path": "./model/cp-best.ckpt",
+    "model_path": "./model/my_model.h5",
     "scaler_path": "./model/scaler.gz",
-    "shape": [70, 4]
+    "shape": [70, 5]
   },
 
   "API": {

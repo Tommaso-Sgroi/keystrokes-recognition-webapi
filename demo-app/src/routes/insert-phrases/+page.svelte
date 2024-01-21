@@ -127,7 +127,7 @@
     
     //register press, release and hold time
     let keyPressTimes = {};
-    let times = [[0,0,0,0]];
+    let times = [[0,0,0,0,0]];
 
     const handleKeyDown = (event) => {
         const key = event.key;
@@ -158,12 +158,13 @@
     //calculate values for evaluation
     function calculateParams(i, j){
        
-        let h = Number(j[3]);
-        let pp = Number(j[1]-i[1]);
-        let rp = Number(j[1]-i[2]);
+        let h = Number(Math.abs(j[3]));
+        let pp = Number(Math.abs(j[1]-i[1]));
+        let rp = Number(Math.abs(j[1]-i[2]));
+        let rr = Number(Math.abs(j[2]-i[2]));
         //If considering first keystroke
         if(pp>1000){pp=0;rp=0;}
-        return [Number(j[0]), Math.round(h), Math.round(pp), Math.round(rp)]
+        return [Number(j[0]), Math.round(h), Math.round(pp), Math.round(rp), Math.round(rr)]
     }
     let isLoading = true;
     //verification - claim ID and send phrase

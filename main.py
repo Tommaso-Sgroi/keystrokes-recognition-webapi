@@ -9,7 +9,7 @@ import uvicorn
 app = app
 
 
-def populate_database(ks: KeystrokeDatabase, file=f'data{separator}ks.zip'):
+def populate_database(ks: KeystrokeDatabase, file=f'data{separator}ks1.zip'):
     import zipfile, json
     from pathlib import Path
 
