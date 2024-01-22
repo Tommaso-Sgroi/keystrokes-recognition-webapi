@@ -8,7 +8,7 @@
     "raise_on_warnings": true
   },
   "model": {
-    "threshold": 0.5,
+    "threshold": 0.75,
     "model_path": "./model/cp-best.ckpt",
     "scaler_path": "./model/scaler.gz",
     "shape": [70, 4]
