@@ -82,8 +82,8 @@ class KeystrokeRecognitionModel(ModelInterface):
         self.scaler = load(config["scaler_path"])
         shape = config['shape']
         threshold = config['threshold']
-        self.model = create_siamese_model(shape)
-        tf.keras.models.load_model(config["model_path"], safe_mode=False, custom_objects={'K': K})
+        # self.model = create_siamese_model(shape)
+        self.model = tf.keras.models.load_model(config["model_path"], safe_mode=False, custom_objects={'K': K})
 
         # print(self.model.input_shape, config["model_path"])
         # self.model.load_weights(f'{config["model_path"]}').expect_partial()
