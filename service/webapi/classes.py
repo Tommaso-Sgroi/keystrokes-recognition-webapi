@@ -14,3 +14,9 @@ class Probe(object):
         self.keystrokesID = keystrokesID
         # self.userid = userid
         # self.name = name
+
+
+class PredictionResponse(object):
+    def __init__(self, prediction: bool, likelihood: float):
+        self.prediction = prediction
+        self.likelihood = likelihood
