@@ -66,7 +66,7 @@ async def claim_phrase(userid: int, r: Request):
     for i in range(len(keystroke)):
         keystroke[i] = add_padding(keystroke[i])
 
-    keystroke = keystroke[-1]
+    # keystroke = keystroke[-1]
 
     # check user existence
     if not keystroke_database.user_exists(userid):
@@ -79,15 +79,16 @@ async def claim_phrase(userid: int, r: Request):
     # passed, likelihood = passed.tolist(), likelihood.tolist()
     predictions = []
     try:
-        for probe in claiming_probes:
-            _, likelihood = keystroke_model.predict(keystroke, probe)
-            predictions.append(float(np.sum(likelihood)))
+        for ks in keystroke:
+            for probe in claiming_probes:
+                _, likelihood = keystroke_model.predict(ks, probe)
+                predictions.append(float(np.sum(likelihood)))
     except Exception as e:
         print(e)
         raise HTTPException(status_code=http.client.BAD_REQUEST)
 
-    # likelihood = sum(predictions) / len(predictions)
-    likelihood = max(predictions)
+    likelihood = sum(predictions) / len(predictions)
+    # likelihood = max(predictions)
     passed = bool(likelihood >= keystroke_model.threshold)
     # add padding or truncate
 
