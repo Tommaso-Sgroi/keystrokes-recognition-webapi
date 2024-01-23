@@ -30,147 +30,169 @@
 </script>
 
 <style>
-	/*fix resizing on very width-small screens*/
-	@media only screen and (max-width: 900px) {
-	/*
-    .container.profile {
-		font-size: small;
-    }
-
-	.button{
-		transform: scale(0.8)
-	}
-
-	.button:hover{
-		transform: scale(0.9);
-	}
-
-	p,h2{
-		font-size: small;
-	}
-	*/
-	.phrasebox{
-		transform:scale(0.6);
-	}
-
-
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'IBM Plex Mono', monospace;
 }
-	@media only screen and (max-width: 700px) {
-	/*
-    .container.profile {
-        font-size: x-small;
-    }
 
-	.button{
-		transform: scale(0.6)
-	}
-
-	.button:hover{
-		transform: scale(0.7);
-	}
-
-	p,h2{
-		font-size: x-small;
-	}
-	*/
-	.phrasebox{
-		transform:scale(0.45);
-	}
-
+body {
+  background-color: #F2F2F2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column; /* Adjusted to column layout */
+  min-height: 100vh;
 }
-	*{
-		box-sizing: border-box;
-		margin: 0;
-		padding: 0;
-		font-family:'Cambria', 'Cochin', 'Georgia', 'Times', 'Times New Roman';
-	}
 
-	body{
-		background-color: #C8D5B9;
-		width: 100%;
-		height: 100vh;
-	}
+.top-bar {
+  background-color: #333; /* Choose your desired color for the top bar */
+  padding: 10px;
+  width: 100%;
+  text-align: top;
+  color: #FFF; /* Choose your desired text color */
+}
 
-	p{
-		padding: 0.5%;
-	}
-
-	.title{
-		text-align: center;
-		padding-top: 2%;
-		font-size: xx-large;
-	}
-
-	.bigcard{
-		margin-top:5%;
-		margin-left: 10%;
-		margin-right: 10%;
-		background-color: #FAF3DD;
-		box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.787);
-		box-sizing: border;
-		height:auto;
-		width:auto;
-		border-radius: 25px;
-	}
-
-	.container {
-  		transition: 0.3s;
-		text-align: center;
+.input-bar {
+  width: auto;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+inpuuut{
+		margin-bottom: 1rem;
 		width:auto;
 		height:auto;
-		display:flex;
-		padding: 1%;
-		justify-content: center;
-  		align-items: center; 
-		flex-direction: column;
-	}
-	
-	.tab1cards {
-		display: grid;
-  		grid-template-columns: repeat(auto-fit,minmax(160px, 1fr));
-		padding: 50px;
-		text-align: center;
-		justify-content: center;
-	}
-
-
-	.container.profile:hover{
-		box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-		border-radius: 5%;
-		transform: scale(1.05);
-	}
-	
-	.container.profile{
-		position: relative;
-		margin:2%;
-	}
-
-	.avatar{
-		max-width: 70%;
-		max-height: 70%;
-	}
-
-	.button{
-		border-radius: 25px;
-		background-color:#8FC0A9;
-		color: rgb(0, 0, 0);
-		padding: 15px 32px;
-		text-align: center;
-		display: inline-block;
 		font-size: 16px;
-		border: none;
-		margin-left:5px;
-		margin-right: 5px;
 	}
 
-	.button:hover{
-		box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-		transform: scale(1.1);
-	}
+.input-bar:focus {
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
 
-	.margin{
-    	padding:15px;
-  	}	
+.title {
+  text-align: center;
+  font-size: 2rem;
+}
 
+.bigcard-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.bigcard {
+  margin: 5% auto;
+  background-color: #FFFFFF;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  padding: 20px;
+  grid-template-columns: repeat(auto-fit,minmax(160px, 1fr));
+  max-width: 800px;
+  
+}
+
+.bigcard-user {
+  margin: 5rem auto;
+  background-color: #FFFFFF;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  padding: 20px;
+  grid-template-columns: repeat(auto-fit,minmax(160px, 1fr));
+  max-width: 800px;
+}
+
+.bigcard-user:hover {
+    background-color: #d8d8d88a;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  transform: scale(1.1);
+}
+
+.tab1cards {
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+  justify-content: left; /* Adjust based on your spacing preferences */
+  gap: 15px;
+}
+
+
+
+
+.container-with-even-width > * {
+  flex: 1; /* All child elements share the available space equally */
+  margin: 5px; /* Adjust based on your spacing preferences */
+  width: 100%;
+  align-items: center;
+}
+
+
+.container.profile {
+  box-sizing: border-box;
+}
+
+html{ padding-bottom: 100px;}
+.avatar {
+  width: 100%;
+  max-width: 100px;
+  height: auto;
+  border-radius: 50%;
+  margin-bottom: 5px;
+}
+
+.container {
+  text-align: center;
+}
+
+
+
+.button {
+  border-radius: 25px;
+  background-color: #4CAF50;
+  color: rgb(241, 241, 241);
+  padding: 15px 32px;
+  text-align: center;
+  display: inline-block;
+  font-size: 16px;
+  border: none;
+  margin: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+}
+
+.reload-button {
+  border-radius: 25px;
+  background-color: transparent;
+  color: #000000;
+  padding: 15px 32px;
+  text-align: center;
+  display: inline-block;
+  font-size: 20px;
+  border: none;
+  margin: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+}
+
+.reload-button:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  transform: scale(1.1);
+}
+
+.button:hover {
+  background-color: #45a049;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  transform: scale(1.1);
+}
+
+.margin {
+  padding: 15px;
+}
 
 </style>

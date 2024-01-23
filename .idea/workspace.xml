@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="88c35914-e3ef-4fee-970b-b3b49019fd5a" name="Changes" comment="Update config and docker file">
+      <change beforePath="$PROJECT_DIR$/demo-app/src/app.html" beforeDir="false" afterPath="$PROJECT_DIR$/demo-app/src/app.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo-app/src/routes/+page.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/demo-app/src/routes/+page.svelte" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo-app/src/routes/insert-phrases/+page.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/demo-app/src/routes/insert-phrases/+page.svelte" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo-app/src/routes/registration/+page.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/demo-app/src/routes/registration/+page.svelte" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Dockerfile" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="stable_model" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
+  <component name="ProjectId" id="2bBPPTe1vKhOfmxgAfm9kNolHzh" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_MARK_IGNORED_FILES_AS_EXCLUDED&quot;: &quot;true&quot;,
+    &quot;Python.api.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;frontend2&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/tommaso/PycharmProjects/biometric-system-webapi&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/snap/pycharm-professional/364/plugins/javascript-impl/jsLanguageServicesImpl/external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;
+    ]
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/model" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/model" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+      <module name="biometric-system-webapi" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="SDK_NAME" value="Python 3.10 (biometric-system-webapi)" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-50da183f06c8-2887949eec09-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-233.13135.95" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="88c35914-e3ef-4fee-970b-b3b49019fd5a" name="Changes" comment="" />
+      <created>1705685474396</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1705685474396</updated>
+      <workItem from="1705757638127" duration="9364000" />
+      <workItem from="1705770165547" duration="576000" />
+      <workItem from="1705770751142" duration="2439000" />
+      <workItem from="1705773470570" duration="11000" />
+      <workItem from="1705853205905" duration="2271000" />
+      <workItem from="1705859304160" duration="3589000" />
+      <workItem from="1705866622049" duration="3439000" />
+      <workItem from="1705920283192" duration="9619000" />
+      <workItem from="1706029818556" duration="108000" />
+      <workItem from="1706031320219" duration="6912000" />
+      <workItem from="1706042186516" duration="751000" />
+    </task>
+    <task id="LOCAL-00001" summary="Trying to add the model, still to implement. Probably i broke things">
+      <option name="closed" value="true" />
+      <created>1705688889643</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1705688889643</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Add real model and fix bug">
+      <option name="closed" value="true" />
+      <created>1705765291324</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1705765291324</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Add real model and fix bug">
+      <option name="closed" value="true" />
+      <created>1705770856332</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1705770856332</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Fix api boh&#10;Co-authored-by: nunzia-damb &lt;nunzia-damb@users.noreply.github.com&gt;">
+      <option name="closed" value="true" />
+      <created>1705773122536</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1705773122536</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Fix api boh&#10;Co-authored-by: ElenaValsecchi00 &lt;elenavalsecchi00@users.noreply.github.com&gt;">
+      <option name="closed" value="true" />
+      <created>1705853742094</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1705853742094</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Fix push registration keystrokes&#10;&#10;Co-authored-by: ElenaValsecchi00 &lt;elenavalsecchi00@users.noreply.github.com&gt;">
+      <option name="closed" value="true" />
+      <created>1705853803345</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1705853803345</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Fix push registration keystrokes&#10;&#10;Co-authored-by: ElenaValsecchi00 &lt;elenavalsecchi00@users.noreply.github.com&gt;">
+      <option name="closed" value="true" />
+      <created>1705853820845</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1705853820845</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Add new model, new dataset and updated frontend to record rr">
+      <option name="closed" value="true" />
+      <created>1705868939976</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1705868939976</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Add new model, new dataset and updated frontend to record rr">
+      <option name="closed" value="true" />
+      <created>1705869009029</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1705869009029</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Add new model, fix some bugs and so on">
+      <option name="closed" value="true" />
+      <created>1705927304751</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1705927304751</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Add new best model">
+      <option name="closed" value="true" />
+      <created>1705939647061</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1705939647061</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Add new best model">
+      <option name="closed" value="true" />
+      <created>1706029917421</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1706029917421</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Update config and docker file">
+      <option name="closed" value="true" />
+      <created>1706037596682</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1706037596682</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="main" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Trying to add the model, still to implement. Probably i broke things" />
+    <MESSAGE value="Add real model and fix bug" />
+    <MESSAGE value="Fix api boh&#10;Co-authored-by: nunzia-damb &lt;nunzia-damb@users.noreply.github.com&gt;" />
+    <MESSAGE value="Fix api boh&#10;&#10;Co-authored-by: ElenaValsecchi00 &lt;ElenaValsecchi00@users.noreply.github.com&gt;" />
+    <MESSAGE value="Fix api boh&#10;Co-authored-by: ElenaValsecchi00 &lt;elenavalsecchi00@users.noreply.github.com&gt;" />
+    <MESSAGE value="Fix push registration keystrokes&#10;&#10;Co-authored-by: ElenaValsecchi00 &lt;ElenaValsecchi00@users.noreply.github.com&gt;" />
+    <MESSAGE value="Fix push registration keystrokes&#10;&#10;Co-authored-by: ElenaValsecchi00 &lt;elenavalsecchi00@users.noreply.github.com&gt;" />
+    <MESSAGE value="Add new model, new dataset and updated frontend to record rr" />
+    <MESSAGE value="Add new model, fix some bugs and so on" />
+    <MESSAGE value="Add new best model" />
+    <MESSAGE value="Update config and docker file" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update config and docker file" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/biometric_system_webapi$main.coverage" NAME="main Coverage Results" MODIFIED="1706042187851" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+  </component>
+</project>

@@ -1,4 +1,6 @@
-<div class="title"><h4>Keystroke Enrollment</h4></div>
+<div class="bigcard">   
+    <div class="title"><h4>Keystroke Registration</h4></div>
+</div> 
 <div class="bigcard registration">
   <div class="container"> 
     <form on:submit|preventDefault={handleSubmit}>
@@ -6,9 +8,9 @@
         <h2 class="margin" id="name">Please choose a username to be identified</h2>
         <input
           required
-          type="text"
+          type="margin-bar" class="input-bar"
           placeholder="user123"
-          v-model="username"
+          v-model="username" 
           bind:value={$username}
         />
       </label>
@@ -37,13 +39,6 @@
     .bigcard.registration{
       margin-right: 20%;
       margin-left: 20%;
-	}
-
-  input{
-		margin-bottom: 10px;
-		width:100px;
-		height:30px;
-		font-size: 16px;
 	}
   </style>
 

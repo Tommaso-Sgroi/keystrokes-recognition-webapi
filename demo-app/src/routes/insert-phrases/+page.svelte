@@ -1,16 +1,22 @@
-<div class="title"><h4>Keystroke Enrollment</h4></div>
-<div class = "bigcard phrases">
-{#if !claimingDone}
-<div class="container phrases">
-    <div class="container phrase">
-        {#if displayPhrase}
+
+<div class="bigcard">   
+    <div class="title"><h4>Keystroke Enrollment</h4></div>
+</div> 
+
+<div class="container-with-even-width">
+{#if displayPhrase && !claimingDone}
+    <div class="bigcard">   
         <h2>{displayPhrase}</h2>
-        {/if}
-    </div>
-    <button class="button phrase" on:click={appendRandomPhrase}>reload</button>
+    </div> 
+{/if}
+<div class = "bigcard">
+{#if !claimingDone}
+
+<div class="container phrases">
+    <button class="reload-button" on:click={appendRandomPhrase}>reload</button>
     <form>
       <label>
-        <input class="phrasebox"
+        <input class="input-bar"
           required
           type="text"
           placeholder="Write the phrase that appears on top here"
@@ -43,6 +49,8 @@
     </div>
 </div>
 {/if}
+</div>
+
 </div>
 
 <script>
@@ -210,20 +218,18 @@
     }
     
     input {
-        width: 500px;
+        width: 100%;
         float: left;
         height: 35px;
         line-height: 3em;
         font-size:14pt;
         border-radius: 5px;
-        border: 2px solid #4A7C59;
         margin-bottom:15px;
     }
     .button.phrase{
         border-radius: 25px;
-        background-color:#8FC0A9;
-        color: rgb(0, 0, 0);
-        padding: 15px 15px;
+        background-color:#4CAF50;
+        color: rgb(241, 241, 241);
         text-align: center;
         display: inline-block;
         font-size: 20px;
@@ -237,8 +243,9 @@
     }
     
     .phrase{
-        border: 2px solid #4A7C59;
+        border: 2px solid #4CAF50;
         border-radius: 25px;
+        padding: 10px;
         background-color: white;
         
     }
